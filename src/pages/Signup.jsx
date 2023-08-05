@@ -2,38 +2,43 @@ import axios from 'axios'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-function Signup() {
+const Signup = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [image, setImage] = useState('')
   const [bootcamp, setBootcamp] = useState('')
   const [graduationDate, setGraduationDate] = useState('')
-  const nav = useNavigate()
+  /*     const [isLoading, setIsLoading] = useState(false);
+   */ const nav = useNavigate()
 
   const handleSignup = async e => {
     e.preventDefault()
+    /*     setIsLoading(true);
+     */
+
     try {
-      const res = await axios.post('http://localhost:5005/auth/signup', {
-        username: username,
-        email: email,
-        password: password,
-        image: image,
-        bootcamp: bootcamp,
-        graduationDate: graduationDate,
-      })
-      setUsername(''),
-        setEmail(''),
-        setPassword(''),
-        setImage(''),
-        setBootcamp(''),
-        setGraduationDate(''),
-        console.log('here is the signup response', res)
+      const res = await axios.post(
+        'http://localhost:5005/auth/signup',
+
+        { username, email, password, image, bootcamp, graduationDate }
+      )
+      {
+        setUsername('')
+        setEmail('')
+        setPassword('')
+        setImage('')
+        setBootcamp('')
+        setGraduationDate('')
+      }
+
+      console.log('here is the signup response', res.data)
       nav('/Login')
     } catch (error) {
       console.error(error)
     }
-    nav('/Login')
+    /* setIsLoading(false);
+     */
   }
 
   const formStyle = {
@@ -95,7 +100,7 @@ function Signup() {
           onChange={event => {
             setPassword(event.target.value)
           }}
-          placeholder='Passord'
+          placeholder='Password'
         />
 
         <input
