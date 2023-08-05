@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { AuthContext } from "../context/Auth.context";
  import { useNavigate } from "react-router-dom";
 
-function IsPrivate({ children }) {
+function IsPrivate(props) {
   //grabbing information from the context (from the frig)
   const { isLoading, isLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -13,13 +13,14 @@ function IsPrivate({ children }) {
   }
   //If the data has arrived and the user is still not logged IN, then redirect to the login page
   if (!isLoggedIn) {
-    navigate("/login");
-  }
+    return navigate("/login");
+  } else {
 
   // ELse... return the child component.
   //Everything was ok
 
-  return <div>{{children}}</div>;
+  return <div>{props.children}</div>;
+}
 }
 
 
