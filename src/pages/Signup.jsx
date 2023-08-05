@@ -3,34 +3,49 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 
-function Signup(){
+const Signup = () => {
     const [username, setUsername] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [image, setImage] = useState('')
     const [bootcamp, setBootcamp] = useState('')
     const [graduationDate, setGraduationDate] = useState('')
-    const nav = useNavigate();
+/*     const [isLoading, setIsLoading] = useState(false);
+ */    const nav = useNavigate();
 
+    
    const handleSignup = async (e)=>{
-e.preventDefault();
+    e.preventDefault();
+/*     setIsLoading(true);
+ */
+    
 try{
-const res = await axios.post('http://localhost:5173/signup',)
-    setUsername(''),
-    setEmail (''),
-    setPassword(''),
-    setImage(''),
-    setBootcamp(''),
-    setGraduationDate(''),
+const res = await axios.post('http://localhost:5005/auth/signup',
+
+   {username,
+    email,
+    password,
+    image,
+    bootcamp,
+    graduationDate
+})
+{
+setUsername('')
+setEmail('')
+setPassword('')
+setImage('')
+setBootcamp('')
+setGraduationDate('')
+}
+
+    console.log("here is the signup response", res.data);
     nav('/Login')
-
-console.log("here is the signup response", res);
-
 }
 catch(error){
     console.error(error)
 }
-    }
+/* setIsLoading(false);
+ */}
 
     const formStyle = {
         display: "flex",
@@ -93,7 +108,7 @@ catch(error){
             onChange={(event) => {
               setPassword(event.target.value);
             }}
-            placeholder='Passord' />
+            placeholder='Password' />
         
         
           <input
