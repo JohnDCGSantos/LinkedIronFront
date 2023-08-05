@@ -5,6 +5,7 @@ import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Feed from './pages/Feed'
 import Profile from './pages/Profile'
+import Navbar from './components/Navbar'
 import Error from './pages/Error'
 /* import isPrivate from "./components/isPrivate";
  */ /* import Navbar from './components/Navbar'; */
@@ -12,7 +13,7 @@ import Error from './pages/Error'
 function App() {
   return (
     <>
-      {/* <Navbar /> */}
+      <Navbar />
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<Login />} />
