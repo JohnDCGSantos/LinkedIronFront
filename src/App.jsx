@@ -10,7 +10,7 @@ function App() {
   return (
     <>
       <Routes>
-        <Route path='/' element={<Login />} />
+        <Route path='/login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
         <Route path='/Feed/:userId' element={<Feed />} /> {/* isprivate */}
         <Route path='/Profile' element={<Profile />} /> {/* isprivate */}
