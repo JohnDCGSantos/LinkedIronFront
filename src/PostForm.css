@@ -1,0 +1,78 @@
+.post-form {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .form-field {
+    margin-bottom: 20px;
+  }
+  
+  .form-field label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .form-field input,
+  .form-field textarea,
+  .form-field .react-select__control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  .form-field textarea {
+    height: 120px;
+  }
+  
+  .form-field .react-select__control {
+    min-height: 40px;
+  }
+  
+  .form-field .react-select__control--is-focused {
+    border-color: #4CAF50;
+    box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+  }
+  
+  .form-field .react-select__single-value {
+    color: #333;
+  }
+  
+  .form-field .react-select__placeholder {
+    color: #999;
+  }
+  
+  .form-field .react-select__menu {
+    margin-top: 5px;
+  }
+  
+  .form-field .react-select__option {
+    padding: 8px;
+    cursor: pointer;
+  }
+  
+  .form-field .react-select__option:hover {
+    background-color: #f0f0f0;
+  }
+  
+  button {
+    background-color: #4CAF50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  button[type="submit"] {
+    margin-top: 20px;
+  }

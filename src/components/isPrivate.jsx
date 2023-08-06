@@ -2,7 +2,7 @@ import { useContext } from 'react'
 import { AuthContext } from '../context/Auth.context'
 import { useNavigate } from 'react-router-dom'
 
-function IsPrivate({ children }) {
+function IsPrivate() {
   //grabbing information from the context (from the frig)
   const { isLoading, isLoggedIn } = useContext(AuthContext)
   const navigate = useNavigate()

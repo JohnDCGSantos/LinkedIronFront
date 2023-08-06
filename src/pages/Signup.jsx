@@ -21,8 +21,9 @@ const Signup = () => {
       const res = await axios.post(
         'http://localhost:5005/auth/signup',
 
-        { username, email, password, image, bootcamp, graduationDate }
-      )
+        { username, email, password, image, bootcamp, graduationDate },
+        
+        )
       {
         setUsername('')
         setEmail('')
@@ -40,6 +41,21 @@ const Signup = () => {
     /* setIsLoading(false);
      */
   }
+  /* const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setImage(selectedFile);
+  }; */
+
+   /* const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const selectedFile = event.dataTransfer.files[0];
+    setImage(selectedFile);
+  }; */
+
 
   const formStyle = {
     display: 'flex',
@@ -112,7 +128,16 @@ const Signup = () => {
             setImage(event.target.value)
           }}
           placeholder='Image'
-        />
+        />  {/* <div onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        style={{ border: '2px dashed #ccc', padding: '20px' }}>
+{image ? (
+          <p>Selected File: {image.name}</p>
+        ) : (
+          <p>Drag and drop a file here or click to select a file</p>
+        )}
+
+        </div> */}
 
         <input
           style={inputStyle}

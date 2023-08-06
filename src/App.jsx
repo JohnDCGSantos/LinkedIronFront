@@ -6,9 +6,10 @@ import Login from './pages/Login'
 import Feed from './pages/Feed'
 import Profile from './components/Profile'
 import Navbar from './components/Navbar'
+import PostDetails from './pages/PostDetails'
 import Error from './pages/Error'
 /* import isPrivate from "./components/isPrivate";
- */ /* import Navbar from './components/Navbar'; */
+ */
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <Route path='/Signup' element={<Signup />} />
         <Route path='/Feed/:userId' element={<Feed />} />
 
-        <Route path='/Profile/:userId' element={<Profile />} />
+        <Route path='/Profile' element={<Profile />} />
 
         <Route path='*' element={<Error />} />
       </Routes>

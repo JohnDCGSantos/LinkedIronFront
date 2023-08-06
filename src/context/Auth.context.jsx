@@ -3,6 +3,7 @@ import axios from 'axios'
 
 const AuthContext = createContext()
 
+
 const AuthContextWrapper = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -67,6 +68,7 @@ const AuthContextWrapper = ({ children }) => {
   }, [])
   console.log('Context Data:', { user, isLoading, isLoggedIn })
 
+  console.log('AuthProvider user:', user);
   return (
     <AuthContext.Provider
       value={{
