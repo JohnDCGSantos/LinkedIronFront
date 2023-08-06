@@ -19,17 +19,10 @@ const AuthContextWrapper = ({ children }) => {
           headers: { authorization: `Bearer ${tokenInStorage}` },
         })
         console.log('from the context, here is the verify response', data)
-
-        if (data) {
-          setUser(data.currentUser)
-          setIsLoading(false)
-          setIsLoggedIn(true)
-        } else {
-          // If data.currentUser does not exist, the token is invalid
-          setUser(null)
-          setIsLoading(false)
-          setIsLoggedIn(false)
-        }
+        const user = data
+        setUser(user)
+        setIsLoading(false)
+        setIsLoggedIn(true)
       } catch (err) {
         console.log('error on the authenticate user function', err)
         setUser(null)
