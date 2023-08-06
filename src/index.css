@@ -67,3 +67,14 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.userStatus {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: baseline;
+}
+
+.userStatus button{
+  margin: 0 5px;
+}
