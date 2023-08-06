@@ -8,6 +8,8 @@ import Profile from './components/Profile'
 import Navbar from './components/Navbar'
 import PostDetails from './pages/PostDetails'
 import Error from './pages/Error'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 /* import isPrivate from "./components/isPrivate";
  */
 
