@@ -12,6 +12,7 @@ const Navbar = () => {
         <div className='userNavbar'>
           <Link to={'/Feed'}>Feed</Link>
           <Link to={'/Profile'}>Profile</Link>
+          <Link to={'/PostDetails'}>Create New Post</Link>
           <button onClick={logOutUser}>Logout</button>
           <span>{user && user.name}</span>
         </div>
