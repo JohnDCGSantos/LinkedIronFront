@@ -18,7 +18,8 @@ const AuthContextWrapper = ({ children }) => {
           headers: { authorization: `Bearer ${tokenInStorage}` },
         })
         console.log('from the context, here is the verify response', data)
-        setUser(data.currentUser)
+        const user = data;
+        setUser(user)
         setIsLoading(false)
         setIsLoggedIn(true)
       } catch (err) {
