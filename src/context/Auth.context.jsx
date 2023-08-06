@@ -10,6 +10,7 @@ const AuthContextWrapper = ({ children }) => {
 
   const authenticateUser = async () => {
     const tokenInStorage = localStorage.getItem('authToken')
+    console.log('Token from localStorage:', tokenInStorage)
     // console.log("here is the token from the local storage", tokenInStorage);
     if (tokenInStorage) {
       try {
@@ -18,9 +19,17 @@ const AuthContextWrapper = ({ children }) => {
           headers: { authorization: `Bearer ${tokenInStorage}` },
         })
         console.log('from the context, here is the verify response', data)
-        setUser(data.currentUser)
-        setIsLoading(false)
-        setIsLoggedIn(true)
+
+        if (data) {
+          setUser(data.currentUser)
+          setIsLoading(false)
+          setIsLoggedIn(true)
+        } else {
+          // If data.currentUser does not exist, the token is invalid
+          setUser(null)
+          setIsLoading(false)
+          setIsLoggedIn(false)
+        }
       } catch (err) {
         console.log('error on the authenticate user function', err)
         setUser(null)
@@ -47,6 +56,18 @@ const AuthContextWrapper = ({ children }) => {
     // and update the state variables
     authenticateUser()
   }
+  const userData = async () => {
+    if (isLoggedIn) {
+      try {
+        // Make a call to the server to fetch user data
+        const response = await axios.get(`http://localhost:5005/api/${user._Id}`)
+        const data = response.data // Get the data from the response object
+        console.log('User data:', data)
+      } catch (err) {
+        console.log('Error fetching user data', err)
+      }
+    }
+  }
 
   useEffect(() => {
     authenticateUser()
@@ -62,6 +83,7 @@ const AuthContextWrapper = ({ children }) => {
         isLoading,
         isLoggedIn,
         logOutUser,
+        userData,
       }}
     >
       {children}
