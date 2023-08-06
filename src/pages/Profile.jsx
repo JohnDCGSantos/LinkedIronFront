@@ -1,8 +1,14 @@
 import { useContext } from 'react'
 import { AuthContext } from '../context/Auth.context'
 
+
 function Profile() {
+   
   const { isLoggedIn, user, logOutUser, isLoading } = useContext(AuthContext)
+ 
+  
+ 
+
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -13,12 +19,13 @@ function Profile() {
       </div>
     )
   }
-
   return (
     <div>
-      <h2>Welcome back, {user}!</h2>
+      <h2>Welcome back, {}!</h2>
       {/* Render other profile details here */}
-      <button onClick={() => logOutUser()}>Log Out</button>
+      
+
+    <button onClick={() => logOutUser()}>Log Out</button>
     </div>
   )
 }

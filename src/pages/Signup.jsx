@@ -40,6 +40,21 @@ const Signup = () => {
     /* setIsLoading(false);
      */
   }
+  const handleFileChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setImage(selectedFile);
+  };
+
+  const handleDragOver = (event) => {
+    event.preventDefault();
+  };
+
+  const handleDrop = (event) => {
+    event.preventDefault();
+    const selectedFile = event.dataTransfer.files[0];
+    setImage(selectedFile);
+  };
+
 
   const formStyle = {
     display: 'flex',
@@ -108,11 +123,18 @@ const Signup = () => {
           type='text'
           value={image}
           required
-          onChange={event => {
-            setImage(event.target.value)
-          }}
+          onChange={handleFileChange}
           placeholder='Image'
-        />
+        /> <div onDragOver={handleDragOver}
+        onDrop={handleDrop}
+        style={{ border: '2px dashed #ccc', padding: '20px' }}>
+{image ? (
+          <p>Selected File: {image.name}</p>
+        ) : (
+          <p>Drag and drop a file here or click to select a file</p>
+        )}
+
+        </div>
 
         <input
           style={inputStyle}

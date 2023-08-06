@@ -6,14 +6,15 @@ import Login from './pages/Login'
 import Feed from './pages/Feed'
 import Profile from './pages/Profile'
 import Navbar from './components/Navbar'
+import PostDetails from './pages/PostDetails'
 import Error from './pages/Error'
 /* import isPrivate from "./components/isPrivate";
- */ /* import Navbar from './components/Navbar'; */
+ */
 
 function App() {
   return (
     <>
-      <Navbar />
+     <Navbar /> 
       <Routes>
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<Login />} />
@@ -21,7 +22,7 @@ function App() {
         <Route path='/Feed/:userId' element={<Feed />} />
 
         <Route path='/Profile' element={<Profile />} />
-
+<Route path='/postdetails' element ={<PostDetails />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </>
