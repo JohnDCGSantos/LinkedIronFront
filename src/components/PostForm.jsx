@@ -8,8 +8,7 @@ function PostForm (props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
-/*     const [image, setImage] = useState('');
- */    const [category, setCategory] = useState('');
+    // const [image, setImage] = useState('');
     const [createdAt, setCreatedAt] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const nav = useNavigate()
@@ -18,17 +17,23 @@ const handleSubmit = async (e)=>{
     e.preventDefault();
 
     try {
+        const token = localStorage.getItem('authToken');
+
         const res = await axios.post(
           `http://localhost:5005/posts/posts`,
-  
           { 
             author,
             title,
             createdAt,
             content,
             /* image, */
-            category,
-        }
+            category: selectedCategory.value,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         
   
@@ -41,10 +46,9 @@ const handleSubmit = async (e)=>{
         setTitle('')
         setContent('')
         setAuthor('')
-/*         setImage('')
- */        setCategory('')
+        setSelectedCategory('')
         setCreatedAt('')
-    }
+      } 
 }
 /* const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
