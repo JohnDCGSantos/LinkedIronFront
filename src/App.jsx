@@ -22,7 +22,7 @@ function App() {
         <Route path='/Feed/:userId' element={<Feed />} />
 
         <Route path='/Profile' element={<Profile />} />
-<Route path='/postdetails' element ={<PostDetails />} />
+        <Route path='/postdetails' element ={<PostDetails />} />
         <Route path='*' element={<Error />} />
       </Routes>
     </>

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router';
-import React from 'react';
 import Select from 'react-select';
 
 
@@ -9,10 +8,10 @@ function PostForm (props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
-    const [image, setImage] = useState('');
-    const [category, setCategory] = useState('');
+/*     const [image, setImage] = useState('');
+ */    const [category, setCategory] = useState('');
     const [createdAt, setCreatedAt] = useState('');
-    const [selectedCategory, setSelectedCategory] = React.useState(null);
+    const [selectedCategory, setSelectedCategory] = useState(null);
     const nav = useNavigate()
 
 const handleSubmit = async (e)=>{
@@ -20,19 +19,21 @@ const handleSubmit = async (e)=>{
 
     try {
         const res = await axios.post(
-          'http://localhost:5005/api/posts',
+          `http://localhost:5005/posts/posts`,
   
-          { title,
-            content,
+          { 
             author,
-            image,
+            title,
+            createdAt,
+            content,
+            /* image, */
             category,
-            createdAt }
+        }
         )
         
   
         console.log('here is the post response', res.data)
-        nav(`/Feed/`) //Falta userId
+        nav(`/Feed`) //Falta userId
       } catch (error) {
         console.error(error)
       }
@@ -40,17 +41,17 @@ const handleSubmit = async (e)=>{
         setTitle('')
         setContent('')
         setAuthor('')
-        setImage('')
-        setCategory('')
+/*         setImage('')
+ */        setCategory('')
         setCreatedAt('')
     }
 }
-const handleFileChange = (event) => {
+/* const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setImage(selectedFile);
-  };
+  }; */
 
-  const handleDragOver = (event) => {
+  /* const handleDragOver = (event) => {
     event.preventDefault();
   };
 
@@ -58,7 +59,7 @@ const handleFileChange = (event) => {
     event.preventDefault();
     const selectedFile = event.dataTransfer.files[0];
     setImage(selectedFile);
-  };
+  }; */
 
   const categoryDropDown = [
     { value: 'careers', label: 'Careers' },
@@ -94,24 +95,23 @@ const handleFileChange = (event) => {
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          
           placeholder='Content'
         />
       </div>
 
       <div className="form-field">
-        <span>{props.username}</span>
+        <span>{props._id}</span>
       </div>
       
-      <div className="form-field">
-        <input
+      {/* <div className="form-field"> */}
+        {/* <input
           
           id="Image"
           value={image}
           onChange={handleFileChange}
           placeholder='Image'
-        />
-        <div 
+        /> */}
+        {/* <div 
         onDragOver={handleDragOver}
         onDrop={handleDrop}
         style={{ border: '2px dashed #ccc', padding: '10px' }}>
@@ -119,9 +119,9 @@ const handleFileChange = (event) => {
           <p>Selected File: {image.name}</p>
         ) : (
           <p>Drag and drop a file here</p>
-        )}</div>
+        )}</div> */}
 
-      </div>
+      {/* </div> */}
 
       <div className="form-field" >
       <Select options={categoryDropDown}
