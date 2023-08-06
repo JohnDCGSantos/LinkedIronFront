@@ -3,7 +3,6 @@ import axios from 'axios'
 
 const AuthContext = createContext()
 
-
 const AuthContextWrapper = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
@@ -11,7 +10,6 @@ const AuthContextWrapper = ({ children }) => {
 
   const authenticateUser = async () => {
     const tokenInStorage = localStorage.getItem('authToken')
-    console.log('Token from localStorage:', tokenInStorage)
     // console.log("here is the token from the local storage", tokenInStorage);
     if (tokenInStorage) {
       try {
@@ -68,7 +66,7 @@ const AuthContextWrapper = ({ children }) => {
   }, [])
   console.log('Context Data:', { user, isLoading, isLoggedIn })
 
-  console.log('AuthProvider user:', user);
+  console.log('AuthProvider user:', user)
   return (
     <AuthContext.Provider
       value={{
