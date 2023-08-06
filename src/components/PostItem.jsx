@@ -21,7 +21,7 @@ function PostItem () {
       <button onClick={() => setLikes(likes + 1)}>
       {likes} Likes </button>
       </div> */}
-        </>}
+        </>
     )
 }
 
