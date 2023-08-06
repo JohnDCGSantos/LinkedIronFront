@@ -1,52 +1,50 @@
 import { useState } from 'react'
 import axios from 'axios'
-import { useNavigate } from 'react-router';
-import Select from 'react-select';
+import { useNavigate } from 'react-router'
+import Select from 'react-select'
 
+function PostForm(props) {
+  const [title, setTitle] = useState('')
+  const [content, setContent] = useState('')
+  const [author, setAuthor] = useState('')
+  /*     const [image, setImage] = useState('');
+   */ const [category, setCategory] = useState('')
+  const [createdAt, setCreatedAt] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState(null)
+  const nav = useNavigate()
 
-function PostForm (props) {
-    const [title, setTitle] = useState('');
-    const [content, setContent] = useState('');
-    const [author, setAuthor] = useState('');
-/*     const [image, setImage] = useState('');
- */    const [category, setCategory] = useState('');
-    const [createdAt, setCreatedAt] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState(null);
-    const nav = useNavigate()
-
-const handleSubmit = async (e)=>{
-    e.preventDefault();
+  const handleSubmit = async e => {
+    e.preventDefault()
 
     try {
-        const res = await axios.post(
-          `http://localhost:5005/posts/posts`,
-  
-          { 
-            author,
-            title,
-            createdAt,
-            content,
-            /* image, */
-            category,
+      const res = await axios.post(
+        `http://localhost:5005/posts/posts`,
+
+        {
+          author,
+          title,
+          createdAt,
+          content,
+          /* image, */
+          category,
         }
-        )
-        
-  
-        console.log('here is the post response', res.data)
-        nav(`/Feed`) //Falta userId
-      } catch (error) {
-        console.error(error)
-      }
-      {
-        setTitle('')
-        setContent('')
-        setAuthor('')
-/*         setImage('')
- */        setCategory('')
-        setCreatedAt('')
+      )
+
+      console.log('here is the post response', res.data)
+      nav(`/Feed`) //Falta userId
+    } catch (error) {
+      console.error(error)
     }
-}
-/* const handleFileChange = (event) => {
+    {
+      setTitle('')
+      setContent('')
+      setAuthor('')
+      /*         setImage('')
+       */ setCategory('')
+      setCreatedAt('')
+    }
+  }
+  /* const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     setImage(selectedFile);
   }; */
@@ -66,44 +64,39 @@ const handleSubmit = async (e)=>{
     { value: 'events', label: 'Events' },
     { value: 'profiles', label: 'Profiles' },
     { value: 'other', label: 'Other' },
-       
-    
-  ];
-  const handleSelectChange = (selectedOption) => {
-    console.log('Selected option:', selectedOption);
-    setSelectedCategory(selectedOption);
-  };
-  
-  
-    return(
-        <>
-         <form className="post-form" onSubmit={handleSubmit}>
-      <div className="form-field">
-        
-        <input
-          type="text"
-          id="title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          required
-          placeholder='Title'
-        />
-      </div>
-      <div className="form-field">
-        
-        <textarea
-          id="content"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder='Content'
-        />
-      </div>
+  ]
+  const handleSelectChange = selectedOption => {
+    console.log('Selected option:', selectedOption)
+    setSelectedCategory(selectedOption)
+  }
 
-      <div className="form-field">
-        <span>{props._id}</span>
-      </div>
-      
-      {/* <div className="form-field"> */}
+  return (
+    <>
+      <form className='post-form' onSubmit={handleSubmit}>
+        <div className='form-field'>
+          <input
+            type='text'
+            id='title'
+            value={title}
+            onChange={e => setTitle(e.target.value)}
+            required
+            placeholder='Title'
+          />
+        </div>
+        <div className='form-field'>
+          <textarea
+            id='content'
+            value={content}
+            onChange={e => setContent(e.target.value)}
+            placeholder='Content'
+          />
+        </div>
+
+        <div className='form-field'>
+          <span>{props._id}</span>
+        </div>
+
+        {/* <div className="form-field"> */}
         {/* <input
           
           id="Image"
@@ -121,34 +114,33 @@ const handleSubmit = async (e)=>{
           <p>Drag and drop a file here</p>
         )}</div> */}
 
-      {/* </div> */}
+        {/* </div> */}
 
-      <div className="form-field" >
-      <Select options={categoryDropDown}
-      id="category"
-      value={selectedCategory}
-       onChange={handleSelectChange}
-       required
-       placeholder="Select a category"
-       />
-        
-      </div>
+        <div className='form-field'>
+          <Select
+            options={categoryDropDown}
+            id='category'
+            value={selectedCategory}
+            onChange={handleSelectChange}
+            required
+            placeholder='Select a category'
+          />
+        </div>
 
-      <div className="form-field">
-        <input
-          type="date"
-          id="createdAt"
-          value={createdAt}
-          onChange={(e) => setCreatedAt(e.target.value)}
-          required
-        />
-      </div>
+        <div className='form-field'>
+          <input
+            type='date'
+            id='createdAt'
+            value={createdAt}
+            onChange={e => setCreatedAt(e.target.value)}
+            required
+          />
+        </div>
 
-      <button type="submit">Submit Post</button>
-    </form>
-  
-        </>
-    )
+        <button type='submit'>Submit Post</button>
+      </form>
+    </>
+  )
 }
 
 export default PostForm
