@@ -36,18 +36,18 @@ const AuthContextWrapper = ({ children }) => {
     }
   }
   const removeToken = () => {
-    // <== ADD
-    // Upon logout, remove the token from the localStorage
     localStorage.removeItem('authToken')
   }
 
   const logOutUser = () => {
-    // <== ADD
-    // To log out the user, remove the token
-    removeToken()
-    // and update the state variables
-    authenticateUser()
+    removeToken();
+    updateUser(null);
+    setIsLoggedIn(false);
   }
+
+  const updateUser = (newUserData) => {
+    setUser(newUserData);
+  };
 
   useEffect(() => {
     authenticateUser()
@@ -58,12 +58,12 @@ const AuthContextWrapper = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        test: 'here is a test',
         authenticateUser,
         user,
         isLoading,
         isLoggedIn,
         logOutUser,
+        updateUser,
       }}
     >
       {children}

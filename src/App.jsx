@@ -1,17 +1,18 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
+import IsPrivate from './components/IsPrivate'
 import HomePage from './pages/HomePage'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
 import Feed from './pages/Feed'
 import Profile from './components/Profile'
 import Navbar from './components/Navbar'
-import PostDetails from './pages/PostDetails'
+import CreatePostPage from './pages/CreatePost'
+import PostPage from './pages/PostPage'
+import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-/* import isPrivate from "./components/isPrivate";
- */
 
 function App() {
   return (
@@ -21,10 +22,47 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
-        <Route path='/Feed/' element={<Feed />} />
 
-        <Route path='/PostDetails' element={<PostDetails />} />
-        <Route path='/Profile' element={<Profile />} />
+        <Route
+          path='/Feed'
+          element={
+            <IsPrivate>
+              <Feed />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/posts/:postId'
+          element={
+            <IsPrivate>
+              <PostPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/posts/:postId/edit'
+          element={
+            <IsPrivate>
+              <EditPostPage />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/Profile'
+          element={
+            <IsPrivate>
+              <Profile />
+            </IsPrivate>
+          }
+        />
+        <Route
+          path='/NewPost'
+          element={
+            <IsPrivate>
+              <CreatePostPage />
+            </IsPrivate>
+          }
+        />
 
         <Route path='*' element={<Error />} />
       </Routes>
