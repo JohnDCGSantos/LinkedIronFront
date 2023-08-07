@@ -1,9 +1,5 @@
-const Feed = () => {
-  return (
-    <div>
-      <h1>Feed</h1>
-    </div>
-  )
+function Feed() {
+  return <h1>Welcome to your Feed</h1>
 }
 
 export default Feed
