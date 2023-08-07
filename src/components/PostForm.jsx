@@ -8,8 +8,7 @@ function PostForm (props) {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [author, setAuthor] = useState('');
-/*     const [image, setImage] = useState('');
- */    const [category, setCategory] = useState('');
+    // const [image, setImage] = useState('');
     const [createdAt, setCreatedAt] = useState('');
     const [selectedCategory, setSelectedCategory] = useState(null);
     const nav = useNavigate()
@@ -18,17 +17,22 @@ const handleSubmit = async (e)=>{
     e.preventDefault();
 
     try {
+        const token = localStorage.getItem('authToken');
+
         const res = await axios.post(
           `http://localhost:5005/posts/posts`,
-  
           { 
-            author,
+            
             title,
-            createdAt,
             content,
             /* image, */
-            category,
-        }
+            category: selectedCategory.value,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         
   
@@ -41,10 +45,9 @@ const handleSubmit = async (e)=>{
         setTitle('')
         setContent('')
         setAuthor('')
-/*         setImage('')
- */        setCategory('')
+        setSelectedCategory('')
         setCreatedAt('')
-    }
+      } 
 }
 /* const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -78,6 +81,7 @@ const handleSubmit = async (e)=>{
     return(
         <>
          <form className="post-form" onSubmit={handleSubmit}>
+       
       <div className="form-field">
         
         <input
@@ -99,18 +103,18 @@ const handleSubmit = async (e)=>{
         />
       </div>
 
-      <div className="form-field">
+      {/* <div className="form-field">
         <span>{props._id}</span>
-      </div>
+      </div> */}
       
-      {/* <div className="form-field"> */}
-        {/* <input
+      {/* <div className="form-field">
+        <input
           
           id="Image"
           value={image}
           onChange={handleFileChange}
           placeholder='Image'
-        /> */}
+        /> </div> */}
         {/* <div 
         onDragOver={handleDragOver}
         onDrop={handleDrop}
@@ -134,15 +138,6 @@ const handleSubmit = async (e)=>{
         
       </div>
 
-      <div className="form-field">
-        <input
-          type="date"
-          id="createdAt"
-          value={createdAt}
-          onChange={(e) => setCreatedAt(e.target.value)}
-          required
-        />
-      </div>
 
       <button type="submit">Submit Post</button>
     </form>
