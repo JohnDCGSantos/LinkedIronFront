@@ -60,7 +60,7 @@ const Navbar = () => {
               <Link to={"/Login"}>
                 <button>Login</button>
               </Link>
-              <Link c to={"/Signup"}>
+              <Link to={"/Signup"}>
                 <button>Signup</button>
               </Link>
             </div>
