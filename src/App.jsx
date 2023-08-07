@@ -7,6 +7,7 @@ import Feed from './pages/Feed'
 import Profile from './components/Profile'
 import Navbar from './components/Navbar'
 import PostDetails from './pages/PostDetails'
+import UpdatePostPage from './pages/UpdatePost'
 import Error from './pages/Error'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
         <Route path='/Feed/' element={<Feed />} />
+        <Route path='/posts/:postId' element={<UpdatePostPage />} />
 
         <Route path='/Profile' element={<Profile />} />
         <Route path='/PostDetails' element ={<PostDetails />} />

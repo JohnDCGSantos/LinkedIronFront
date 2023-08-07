@@ -2,10 +2,11 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import PostForm from "./PostForm";
+import Likes from './Likes'
 
 function PostItem() {
   const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState(0);
+  
 
   const fetchAllPosts = async () => {
     const token = localStorage.getItem("authToken");
@@ -31,6 +32,7 @@ function PostItem() {
     fetchAllPosts();
   }, []);
 
+
   return (
     <>
     <p>Posts: </p>
@@ -42,7 +44,7 @@ function PostItem() {
           <p>{post.content}</p>
           <h1>{post.category}</h1>
           <p>{post.createdAt}</p>
-          <button onClick={() => setLikes(likes + 1)}>{likes} Likes </button>
+          <Likes />
           <Link to={`/posts/${post._id}`}>Check the details</Link>
         </div>;
       })}

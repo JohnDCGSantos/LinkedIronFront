@@ -13,6 +13,8 @@ function PostForm (props) {
     const [selectedCategory, setSelectedCategory] = useState(null);
     const nav = useNavigate()
 
+    /*** Create a Post ***/
+
 const handleSubmit = async (e)=>{
     e.preventDefault();
 
