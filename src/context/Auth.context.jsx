@@ -48,18 +48,6 @@ const AuthContextWrapper = ({ children }) => {
     // and update the state variables
     authenticateUser()
   }
-  const userData = async () => {
-    if (isLoggedIn) {
-      try {
-        // Make a call to the server to fetch user data
-        const response = await axios.get(`http://localhost:5005/api/${user._Id}`)
-        const data = response.data // Get the data from the response object
-        console.log('User data:', data)
-      } catch (err) {
-        console.log('Error fetching user data', err)
-      }
-    }
-  }
 
   useEffect(() => {
     authenticateUser()
@@ -76,7 +64,6 @@ const AuthContextWrapper = ({ children }) => {
         isLoading,
         isLoggedIn,
         logOutUser,
-        userData,
       }}
     >
       {children}
