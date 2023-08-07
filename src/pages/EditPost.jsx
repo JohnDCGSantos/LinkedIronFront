@@ -1,5 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import PostForm from "../components/PostForm";
@@ -9,6 +10,7 @@ function EditPostPage() {
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  const nav = useNavigate();
 
   const fetchPost = async () => {
     const token = localStorage.getItem("authToken");
@@ -43,18 +45,18 @@ function EditPostPage() {
     try {
       const token = localStorage.getItem("authToken");
 
+      console.log("->"+payload.category);
       const response = await axios.put(
         `http://localhost:5005/posts/${postId}`,
+        payload,
         {
           headers: {
             Authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
           },
-          body: JSON.stringify(payload),
         }
       );
       if (response.status === 200) {
-        const updatedPost = await response.json();
+        const updatedPost = await response.data;
         nav(`/posts/${updatedPost._id}`);
       }
     } catch (err) {
@@ -69,9 +71,9 @@ function EditPostPage() {
       <h1>Edit Post</h1>
       {isAuthor ? (
         <PostForm
-          onSubmit={(updatedPostData) => {
-            handleSubmit(updatedPostData);
+          onSubmit={async (updatedPostData) => {
             console.log("Updated post data:", updatedPostData);
+            await handleSubmit(updatedPostData);
           }}
           defaultValues={{
             title: post.title,

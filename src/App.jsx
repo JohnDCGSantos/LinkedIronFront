@@ -1,5 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
+import IsPrivate from "./components/IsPrivate";
 import HomePage from "./pages/HomePage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
@@ -21,12 +22,13 @@ function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/Signup" element={<Signup />} />
-        <Route path="/Feed/" element={<Feed />} />
-        <Route path="/posts/:postId" element={<PostPage />} />
-        <Route path="/posts/:postId/edit" element={<EditPostPage />} />
 
-        <Route path="/Profile" element={<Profile />} />
-        <Route path="/NewPost" element={<CreatePostPage />} />
+        <Route path="/Feed" element={<IsPrivate><Feed /></IsPrivate>} />
+        <Route path="/posts/:postId" element={<IsPrivate><PostPage /></IsPrivate>} />
+        <Route path="/posts/:postId/edit" element={<IsPrivate><EditPostPage /></IsPrivate>} />
+        <Route path="/Profile" element={<IsPrivate><Profile /></IsPrivate>} />
+        <Route path="/NewPost" element={<IsPrivate><CreatePostPage /></IsPrivate>} />
+
         <Route path="*" element={<Error />} />
       </Routes>
     </>
