@@ -1,11 +1,11 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import IsPrivate from "./components/IsPrivate";
+import IsPrivate from "./components/isPrivate";
 import HomePage from "./pages/HomePage";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
 import Feed from "./pages/Feed";
-import Profile from "./components/Profile";
+import Profile from "./pages/Profile";
 import Navbar from "./components/Navbar";
 import CreatePostPage from "./pages/CreatePost";
 import PostPage from "./pages/PostPage";
@@ -13,6 +13,7 @@ import EditPostPage from "./pages/EditPost";
 import Error from "./pages/Error";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 function App() {
   return (
