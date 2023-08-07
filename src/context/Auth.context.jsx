@@ -10,7 +10,7 @@ const AuthContextWrapper = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const authenticateUser = async () => {
-    const tokenInStorage = localStorage.getItem('authToken')
+    const tokenInStorage = localStorage.getItem('authToken');
     // console.log("here is the token from the local storage", tokenInStorage);
     if (tokenInStorage) {
       try {
