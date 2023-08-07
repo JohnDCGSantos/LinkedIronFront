@@ -13,7 +13,7 @@ const Feed = () => {
       const token = localStorage.getItem("authToken");
 
       try {
-        const response = await axios.get(`http://localhost:5005/posts/posts`, {
+        const response = await axios.get(`http://localhost:5005/posts`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -40,7 +40,7 @@ const Feed = () => {
           {posts.map((post) => {
             const isAuthor = post.author === user._id;
 
-            return <Post key={post._id} post={post} isEditable={isAuthor} />;
+            return <Post key={post._id} post={post} isEditable={isAuthor} isCompact={true} />;
           })}
         </div>
       )}

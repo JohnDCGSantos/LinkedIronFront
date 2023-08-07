@@ -1,21 +1,34 @@
+import React from "react";
 import { Link } from "react-router-dom";
 import Likes from "./Likes";
 
-const Post = ({ post, isEditable }) => {
+const Post = ({ post, isCompact, isEditable }) => {
   return (
-    <>
-      <div>
-        <img src={post.image_url} alt="Post image" style={{ width: "70px" }} />
-        <h1>{post.author}</h1>
-        <p>{post.title}</p>
-        <p>{post.content}</p>
-        <h1>{post.category}</h1>
-        <p>{post.createdAt}</p>
+    <div className="card mb-3">
+      <img src={post.image_url} className="card-img-top" alt="Post image" />
+      <div className="card-body">
+        <h5 className="card-title">{post.title}</h5>
+        <p className="card-text">{post.content}</p>
+        <p className="card-text">
+          <small className="text-muted">Category: {post.category}</small>
+        </p>
+        <p className="card-text">
+          <small className="text-muted">Created at: {post.createdAt}</small>
+        </p>
         <Likes />
-        <Link to={`/posts/${post._id}`}>Read more</Link>
-        { isEditable & <Link to={`/posts/${post._id}/edit`}>Edit</Link> }
+        {isCompact &&
+        (
+          <Link to={`/posts/${post._id}`} className="btn btn-primary mr-2">
+            Read more
+          </Link>
+        )}
+        {isEditable && (
+          <Link to={`/posts/${post._id}/edit`} className="btn btn-secondary">
+            Edit
+          </Link>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 
