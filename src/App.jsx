@@ -13,6 +13,7 @@ import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import UsersList from './pages/Users'
 
 function App() {
   return (
@@ -63,6 +64,8 @@ function App() {
             </IsPrivate>
           }
         />
+
+        <Route path='/Users' element={<UsersList />} />
 
         <Route path='*' element={<Error />} />
       </Routes>
