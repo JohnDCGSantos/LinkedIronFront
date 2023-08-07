@@ -1,6 +1,7 @@
 import { useContext} from "react";
 import UserCard from "./UserCard";
 import { AuthContext } from "../context/Auth.context";
+import PostItem from '../components/PostItem'
 
 function Profile() {
   const { user } = useContext(AuthContext);
@@ -12,6 +13,7 @@ function Profile() {
   return (
     <div>
       <UserCard user={user} />
+      <PostItem user={user}/>
     </div>
   );
 }
