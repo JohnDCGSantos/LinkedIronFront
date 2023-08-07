@@ -32,22 +32,41 @@ function PostItem() {
   }, []);
 
   return (
-    <>
-    <p>Posts: </p>
-      {posts.map((post) => {
-        return <div key={post._id}>
-          <img src={post.image_url} alt="beerImg" style={{ width: "70px" }} />
-          <h1>{post.author}</h1>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
-          <h1>{post.category}</h1>
-          <p>{post.createdAt}</p>
-          <button onClick={() => setLikes(likes + 1)}>{likes} Likes </button>
-          <Link to={`/posts/${post._id}`}>Check the details</Link>
-        </div>;
-      })}
-    </>
+    <div className="container">
+      <div className="row">
+        {posts.map((post) => (
+          <div key={post._id} className="col-md-4 mb-4">
+            <div className="card">
+              <img
+                src={post.image_url}
+                alt="beerImg"
+                className="card-img-top"
+                style={{ width: "70px" }}
+              />
+              <div className="card-body">
+                <h5 className="card-title">{post.title}</h5>
+                <p className="card-text">{post.content}</p>
+                <p className="card-text">Author: {post.author}</p>
+                <p className="card-text">Category: {post.category}</p>
+                <p className="card-text">Created At: {post.createdAt}</p>
+                <div className="d-flex justify-content-between align-items-center">
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => setLikes(likes + 1)}
+                  >
+                    {likes} Likes
+                  </button>
+                  <Link to={`/posts/${post._id}`} className="btn btn-secondary">
+                    Check Details
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
-}
+};
 
 export default PostItem;
