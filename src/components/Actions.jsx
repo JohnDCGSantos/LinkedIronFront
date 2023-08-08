@@ -39,6 +39,15 @@ const Actions = ({ postId, addComment }) => {
     }
   };
 
+  const handleShare = () => {
+    const postLink = `${apiBaseUrl}/posts/${postId}`;
+  
+    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postLink)}`;
+    
+    window.open(linkedinShareUrl);
+  };
+  
+
   return (
     <div className="d-flex justify-content-between align-items-center flex-column">
       <div className="d-flex justify-content-between">
@@ -51,7 +60,9 @@ const Actions = ({ postId, addComment }) => {
         >
           <i className="bi bi-chat-dots"></i> Comment
         </button>
-        <button className="btn btn-outline-secondary">
+        <button 
+          className="btn btn-outline-secondary"
+          onClick={handleShare}>
           <i className="bi bi-share"></i> Share
         </button>
       </div>
