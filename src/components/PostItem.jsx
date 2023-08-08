@@ -1,37 +1,35 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import PostForm from "./PostForm";
-import Likes from './Likes'
+import axios from 'axios'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
+import PostForm from './PostForm'
 
 function PostItem() {
-  const [posts, setPosts] = useState([]);
-  
+  const [posts, setPosts] = useState([])
+  const [likes, setLikes] = useState(0)
 
   const fetchAllPosts = async () => {
-    const token = localStorage.getItem("authToken");
+    const token = localStorage.getItem('authToken')
 
     try {
       const response = await axios.get(`http://localhost:5005/posts/posts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
-      const allPosts = response.data;
-      setPosts(response.data);
-      console.log(allPosts);
+      })
+      const allPosts = response.data
+      setPosts(response.data)
+      console.log(allPosts)
     } catch (error) {
-      console.log("Error fetching all posts", error);
+      console.log('Error fetching all posts', error)
     }
-  };
-  const handleNewPost = (newPost) => {
-    setPosts([...posts, newPost]);
-  };
+  }
+  const handleNewPost = newPost => {
+    setPosts([...posts, newPost])
+  }
 
   useEffect(() => {
-    fetchAllPosts();
-  }, []);
-
+    fetchAllPosts()
+  }, [])
 
   return (
     <>
@@ -49,7 +47,7 @@ function PostItem() {
         </div>;
       })}
     </>
-  );
+  )
 }
 
-export default PostItem;
+export default PostItem

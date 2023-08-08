@@ -9,7 +9,7 @@ const AuthContextWrapper = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   const authenticateUser = async () => {
-    const tokenInStorage = localStorage.getItem('authToken');
+    const tokenInStorage = localStorage.getItem('authToken')
     // console.log("here is the token from the local storage", tokenInStorage);
     if (tokenInStorage) {
       try {
@@ -18,7 +18,7 @@ const AuthContextWrapper = ({ children }) => {
           headers: { authorization: `Bearer ${tokenInStorage}` },
         })
         console.log('from the context, here is the verify response', data)
-        const user = data;
+        const user = data
         setUser(user)
         setIsLoading(false)
         setIsLoggedIn(true)
@@ -40,21 +40,21 @@ const AuthContextWrapper = ({ children }) => {
   }
 
   const logOutUser = () => {
-    removeToken();
-    updateUser(null);
-    setIsLoggedIn(false);
+    removeToken()
+    updateUser(null)
+    setIsLoggedIn(false)
   }
 
-  const updateUser = (newUserData) => {
-    setUser(newUserData);
-  };
+  const updateUser = newUserData => {
+    setUser(newUserData)
+  }
 
   useEffect(() => {
     authenticateUser()
   }, [])
   console.log('Context Data:', { user, isLoading, isLoggedIn })
 
-  console.log('AuthProvider user:', user);
+  console.log('AuthProvider user:', user)
   return (
     <AuthContext.Provider
       value={{

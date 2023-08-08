@@ -6,6 +6,7 @@ import { AuthContext } from '../context/Auth.context'
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
   const [errorMessage, setErrorMessage] = useState(null)
   //this is how we grab things from the context
   const { authenticateUser } = useContext(AuthContext)
@@ -21,7 +22,8 @@ function Login() {
       localStorage.setItem('authToken', data.token)
       //Make sure you await the authenticate User as it takes time and you cant access the private route until its finished
       await authenticateUser()
-      nav('/profile')
+
+      nav(`/profile/${data._id}`)
     } catch (err) {
       console.log(err)
       setErrorMessage(err.response.data.errorMessage)
