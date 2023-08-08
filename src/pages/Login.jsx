@@ -7,6 +7,7 @@ import { apiBaseUrl } from "../config";
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
 
   const [errorMessage, setErrorMessage] = useState(null)
   //this is how we grab things from the context
@@ -14,6 +15,7 @@ function Login() {
   const nav = useNavigate()
   const handleLogin = async e => {
     e.preventDefault()
+    setIsLoading(true);
     try {
       const { data } = await axios.post(`${apiBaseUrl}/auth/login`, {
         email,
@@ -24,12 +26,17 @@ function Login() {
       //Make sure you await the authenticate User as it takes time and you cant access the private route until its finished
       await authenticateUser()
 
-      nav(`/profile/${data._id}`)
+      nav(`/profile/`)
     } catch (err) {
-      console.log(err)
-      setErrorMessage(err.response.data.errorMessage)
+      console.log(err);
     }
+    setIsLoading(false);
   }
+
+  if (isLoading){
+    return <h1>Loading...</h1>
+  }
+
   return (
     <div>
       <h2>Login Page</h2>
