@@ -11,9 +11,10 @@ import CreatePostPage from './pages/CreatePost'
 import PostPage from './pages/PostPage'
 import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
+import UsersList from './pages/Users'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import UsersList from './pages/Users'
+import 'bootstrap-icons/font/bootstrap-icons.css';
 
 
 function App() {
