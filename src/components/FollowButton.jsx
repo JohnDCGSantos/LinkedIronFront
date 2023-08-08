@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import { apiBaseUrl } from "../config";
 
 const FollowButton = ({ userId, followUserId, onFollow, onUnfollow }) => {
   const [isFollowing, setIsFollowing] = useState(false)
@@ -15,7 +16,7 @@ const FollowButton = ({ userId, followUserId, onFollow, onUnfollow }) => {
       setIsLoading(true)
       const token = localStorage.getItem('authToken')
       await axios.post(
-        `http://localhost:5005/follow/users/${userId}/follow`,
+        `${apiBaseUrl}/follow/users/${userId}/follow`,
         { userId, followUserId },
         {
           headers: {
@@ -38,7 +39,7 @@ const FollowButton = ({ userId, followUserId, onFollow, onUnfollow }) => {
     try {
       setIsLoading(true)
       const token = localStorage.getItem('authToken')
-      await axios.delete(`http://localhost:5005/follow/users/${userId}/follow`, {
+      await axios.delete(`${apiBaseUrl}/follow/users/${userId}/follow`, {
         data: { userId, unfollowUserId: followUserId }, // Use followUserId directly
         headers: {
           Authorization: `Bearer ${token}`,

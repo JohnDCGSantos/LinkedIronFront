@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Post from '../components/Post'
 import { AuthContext } from '../context/Auth.context'
+import { apiBaseUrl } from '../config'
 
 const Feed = () => {
   const [posts, setPosts] = useState([])
@@ -13,7 +14,7 @@ const Feed = () => {
       const token = localStorage.getItem('authToken')
 
       try {
-        const response = await axios.get(`http://localhost:5005/posts`, {
+        const response = await axios.get(`${apiBaseUrl}/posts`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

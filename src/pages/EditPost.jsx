@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import PostForm from "../components/PostForm";
+import { apiBaseUrl } from "../config";
 
 function EditPostPage() {
   const { postId } = useParams();
@@ -16,7 +17,7 @@ function EditPostPage() {
     const token = localStorage.getItem("authToken");
     try {
       const response = await axios.get(
-        `http://localhost:5005/posts/${postId}`,
+        `${apiBaseUrl}/posts/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -45,9 +46,8 @@ function EditPostPage() {
     try {
       const token = localStorage.getItem("authToken");
 
-      console.log("->"+payload.category);
       const response = await axios.put(
-        `http://localhost:5005/posts/${postId}`,
+        `${apiBaseUrl}/posts/${postId}`,
         payload,
         {
           headers: {
@@ -64,23 +64,47 @@ function EditPostPage() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+
+      const response = await axios.delete(
+        `${apiBaseUrl}/posts/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        nav(`/feed`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   const isAuthor = post.author === user._id;
 
   return (
     <div>
       <h1>Edit Post</h1>
       {isAuthor ? (
-        <PostForm
-          onSubmit={async (updatedPostData) => {
-            console.log("Updated post data:", updatedPostData);
-            await handleSubmit(updatedPostData);
-          }}
-          defaultValues={{
-            title: post.title,
-            content: post.content,
-            category: post.category,
-          }}
-        />
+        <>
+          <PostForm
+            onSubmit={async (updatedPostData) => {
+              console.log("Updated post data:", updatedPostData);
+              await handleSubmit(updatedPostData);
+            }}
+            defaultValues={{
+              title: post.title,
+              content: post.content,
+              category: post.category,
+            }}
+          />
+          <button className="btn btn-danger" onClick={handleDelete}>Delete post</button>
+        </>
       ) : (
         <p>You are not authorized to edit this post.</p>
       )}
