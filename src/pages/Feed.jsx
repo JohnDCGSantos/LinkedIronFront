@@ -39,7 +39,7 @@ const Feed = () => {
       ) : (
         <div>
           {posts.map(post => {
-            <Likes />
+           
             const isAuthor = post.author === user._id
 
             return <Post key={post._id} post={post} isEditable={isAuthor} isCompact={true} />
