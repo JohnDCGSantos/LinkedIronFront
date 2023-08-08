@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { apiBaseUrl } from "../config";
 import axios from "axios";
 import Likes from "./Likes";
 import Comments from "./Comments";
@@ -21,7 +22,7 @@ const Post = ({ post, isCompact, isEditable }) => {
       const token = localStorage.getItem("authToken");
 
       await axios.delete(
-        `http://localhost:5005/posts/${post._id}/comment/${commentId}`,
+        `${apiBaseUrl}/posts/${post._id}/comment/${commentId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

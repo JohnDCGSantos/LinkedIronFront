@@ -2,6 +2,7 @@ import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import PostForm from './PostForm'
+import { apiBaseUrl } from "../config";
 
 function PostItem() {
   const [posts, setPosts] = useState([])
@@ -11,7 +12,7 @@ function PostItem() {
     const token = localStorage.getItem('authToken')
 
     try {
-      const response = await axios.get(`http://localhost:5005/posts/posts`, {
+      const response = await axios.get(`${apiBaseUrl}/posts/posts`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import Post from "../components/Post";
+import { apiBaseUrl } from "../config";
 
 function PostPage() {
   const { postId } = useParams();
@@ -14,7 +15,7 @@ function PostPage() {
     const token = localStorage.getItem("authToken");
     try {
       const response = await axios.get(
-        `http://localhost:5005/posts/${postId}`,
+        `${apiBaseUrl}/posts/${postId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

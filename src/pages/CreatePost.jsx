@@ -1,6 +1,7 @@
 import axios from "axios";
 import PostForm from "../components/PostForm";
 import { useNavigate } from "react-router";
+import { apiBaseUrl } from "../config";
 
 function CreatePostPage() {
   const nav = useNavigate();
@@ -10,7 +11,7 @@ function CreatePostPage() {
       const token = localStorage.getItem("authToken");
 
       const res = await axios.post(
-        `http://localhost:5005/posts`,
+        `${apiBaseUrl}/posts`,
         postData,
         {
           headers: {

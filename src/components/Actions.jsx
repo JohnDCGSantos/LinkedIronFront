@@ -1,5 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
+import { apiBaseUrl } from "../config";
 
 const Actions = ({ postId, addComment }) => {
   const [isCommentVisible, setIsCommentVisible] = useState(false);
@@ -19,7 +20,7 @@ const Actions = ({ postId, addComment }) => {
       const token = localStorage.getItem("authToken");
 
       const newComment = await axios.post(
-        `http://localhost:5005/posts/${postId}/comment`,
+        `${apiBaseUrl}/posts/${postId}/comment`,
         {
           content: comment,
         },

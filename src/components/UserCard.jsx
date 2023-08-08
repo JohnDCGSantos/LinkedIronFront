@@ -2,6 +2,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import { useNavigate } from "react-router-dom"
+import { apiBaseUrl } from "../config";
 
 const UserCard = ({ user }) => {
   const { logOutUser, updateUser } = useContext(AuthContext);
@@ -52,7 +53,7 @@ const UserCard = ({ user }) => {
     try {
       const tokenInStorage = localStorage.getItem("authToken");
       const request = await axios.put(
-        `http://localhost:5005/users/`,
+        `${apiBaseUrl}/users/`,
         editedUser,
         {
           headers: {
@@ -70,7 +71,7 @@ const UserCard = ({ user }) => {
     try {
       const tokenInStorage = localStorage.getItem("authToken");
       setIsLoading(true);
-      await axios.delete(`http://localhost:5005/users/`, {
+      await axios.delete(`${apiBaseUrl}/users/`, {
         headers: {
           Authorization: `Bearer ${tokenInStorage}`,
         },
