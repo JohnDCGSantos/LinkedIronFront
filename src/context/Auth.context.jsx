@@ -40,14 +40,14 @@ const AuthContextWrapper = ({ children }) => {
   }
 
   const logOutUser = () => {
-    removeToken();
-    updateUser(null);
-    setIsLoggedIn(false);
+    removeToken()
+    updateUser(null)
+    setIsLoggedIn(false)
   }
 
-  const updateUser = (newUserData) => {
-    setUser(newUserData);
-  };
+  const updateUser = newUserData => {
+    setUser(newUserData)
+  }
 
   useEffect(() => {
     authenticateUser()
