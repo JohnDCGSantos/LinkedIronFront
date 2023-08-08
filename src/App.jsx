@@ -14,6 +14,7 @@ import Error from './pages/Error'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import UsersList from './pages/Users'
+import FollowingPage from './pages/FollowingPage'
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
+        <Route path='/following' element={<FollowingPage />} />
 
         <Route
           path='/Feed'
