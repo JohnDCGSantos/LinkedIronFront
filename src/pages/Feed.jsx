@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Post from '../components/Post'
 import { AuthContext } from '../context/Auth.context'
-
+import Likes from '../components/Likes'
 const Feed = () => {
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -38,9 +38,11 @@ const Feed = () => {
       ) : (
         <div>
           {posts.map(post => {
+            <Likes />
             const isAuthor = post.author === user._id
 
             return <Post key={post._id} post={post} isEditable={isAuthor} isCompact={true} />
+          
           })}
         </div>
       )}

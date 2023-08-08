@@ -23,7 +23,7 @@ function Login() {
       //Make sure you await the authenticate User as it takes time and you cant access the private route until its finished
       await authenticateUser()
 
-      nav(`/profile/${data._id}`)
+      nav(`/profile`)
     } catch (err) {
       console.log(err)
       setErrorMessage(err.response.data.errorMessage)
