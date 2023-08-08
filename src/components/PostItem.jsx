@@ -44,7 +44,7 @@ function PostItem() {
           <p>{post.content}</p>
           <h1>{post.category}</h1>
           <p>{post.createdAt}</p>
-          <Likes />
+          <Likes postId={post._id} />
           <Link to={`/posts/${post._id}`}>Check the details</Link>
         </div>;
       })}
