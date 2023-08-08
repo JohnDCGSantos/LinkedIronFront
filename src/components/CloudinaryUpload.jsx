@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
 
-const CloudinaryUpload = () => {
+const CloudinaryUpload = ({initialMedia, onMediaUpdated}) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const unsignedUploadPreset = import.meta.env
     .VITE_CLOUDINARY_UNSIGNED_UPLOAD_PRESET;
 
-  const [media, setMedia] = useState([]);
+  const [media, setMedia] = useState(initialMedia||[]);
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [confirmUpload, setConfirmUpload] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -30,7 +30,10 @@ const CloudinaryUpload = () => {
       setUploading(true);
       try {
         const res = await axios.post(url, formData);
-        setMedia([...media, res.data]);
+        const dataAsString = `${res.data.resource_type}/${res.data.public_id}`;
+        const updatedMedia = [...media, dataAsString];
+        setMedia(updatedMedia);
+        onMediaUpdated(updatedMedia);
         setConfirmUpload(false);
         setSelectedFiles([]);
       } catch (error) {
@@ -42,16 +45,22 @@ const CloudinaryUpload = () => {
   };
 
   const deleteMedia = async (publicId) => {
-    const updatedMedia = media.filter((item) => item.public_id !== publicId);
+    const updatedMedia = media.filter(
+      (item) => item.split("/")[1] !== publicId
+    );
     setMedia(updatedMedia);
-
+    onMediaUpdated(updatedMedia);
+    
     // Try to remove from Cloudinary as well
     try {
-      await axios.delete('https://api.cloudinary.com/v1_1/${cloudName}/image/destroy', {
-        params: {
-          public_id: publicId
+      await axios.delete(
+        "https://api.cloudinary.com/v1_1/${cloudName}/image/destroy",
+        {
+          params: {
+            public_id: publicId,
+          },
         }
-      })
+      );
     } catch (error) {
       console.error("Error deleting media from Cloudinary:", error);
     }
@@ -59,7 +68,7 @@ const CloudinaryUpload = () => {
 
   return (
     <div>
-      <h1>Cloudinary Upload Component</h1>
+      <h4>Upload your media</h4>
       <input
         type="file"
         accept="image/*, video/*"
@@ -74,26 +83,26 @@ const CloudinaryUpload = () => {
         </>
       )}
       <CloudinaryContext cloudName={cloudName}>
-        {media.map((item) => (
-          <div key={item.public_id} className="media-item position-relative">
-            {item.resource_type === "image" ? (
-              <Image publicId={item.public_id} width="300" crop="scale" />
-            ) : (
-              <Video
-                publicId={item.public_id}
-                controls
-                width="300"
-                crop="scale"
-              />
-            )}
-            <button
-              className="btn btn-danger btn-sm position-absolute top-0"
-              onClick={() => deleteMedia(item.public_id)}
-            >
-              <i className="bi bi-trash"></i>
-            </button>
-          </div>
-        ))}
+        {media.map((item) => {
+          const itemSplit = item.split("/");
+          const resourceType = itemSplit[0];
+          const publicId = itemSplit[1];
+          return (
+            <div key={publicId} className="media-item position-relative">
+              {resourceType === "image" ? (
+                <Image publicId={publicId} width="300" crop="scale" />
+              ) : (
+                <Video publicId={publicId} controls width="300" crop="scale" />
+              )}
+              <button
+                className="btn btn-danger btn-sm position-absolute top-0"
+                onClick={() => deleteMedia(publicId)}
+              >
+                <i className="bi bi-trash"></i>
+              </button>
+            </div>
+          );
+        })}
       </CloudinaryContext>
     </div>
   );
