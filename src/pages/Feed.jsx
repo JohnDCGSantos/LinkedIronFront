@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
 import Post from '../components/Post'
 import { AuthContext } from '../context/Auth.context'
-import { apiBaseUrl } from "../config";
+import { apiBaseUrl } from '../config'
 
 const Feed = () => {
   const [posts, setPosts] = useState([])

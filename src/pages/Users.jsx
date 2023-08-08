@@ -2,6 +2,7 @@
 import axios from 'axios'
 import FollowButton from '../components/FollowButton'
 import { AuthContext } from '../context/Auth.context'
+import { apiBaseUrl } from "../config";
 
 function UsersList() {
   const [users, setUsers] = useState([])
@@ -12,7 +13,7 @@ function UsersList() {
     const fetchUsers = async () => {
       const token = localStorage.getItem('authToken')
       try {
-        const response = await axios.get('http://localhost:5005/api/users', {
+        const response = await axios.get(`${apiBaseUrl}/api/users`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

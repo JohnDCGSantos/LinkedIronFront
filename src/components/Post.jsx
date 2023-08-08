@@ -16,6 +16,30 @@ const Post = ({ post, isCompact, isEditable }) => {
     setComments(newComments);
   };
 
+  const editComment = async (updatedComment) => {
+    console.log("Editing comment:", updatedComment);
+    try {
+      const token = localStorage.getItem("authToken");
+
+      await axios.put(
+        `${apiBaseUrl}/posts/${post._id}/comment/${updatedComment._id}`,
+        updatedComment,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const updatedComments = comments.map((comment) =>
+        comment._id === updatedComment._id ? updatedComment : comment
+      );
+      setComments(updatedComments);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const deleteComment = async (commentId) => {
     console.log("Deleting comment:", commentId);
     try {
@@ -56,7 +80,7 @@ const Post = ({ post, isCompact, isEditable }) => {
           <Actions postId={post._id} addComment={handleNewComment} />
         </div>
         {comments.length > 0 && (
-          <Comments comments={comments} onDeleteComment={deleteComment} />
+          <Comments comments={comments} onDeleteComment={deleteComment} onUpdateComment={editComment} />
         )}
         {isCompact && (
           <Link to={`/posts/${post._id}`} className="btn btn-primary mr-2">

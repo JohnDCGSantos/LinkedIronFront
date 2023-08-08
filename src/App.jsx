@@ -1,6 +1,6 @@
 import './App.css'
 import { Route, Routes } from 'react-router-dom'
-import IsPrivate from './components/IsPrivate'
+import PrivateRoute from './components/PrivateRoute'
 import HomePage from './pages/HomePage'
 import Signup from './pages/Signup'
 import Login from './pages/Login'
@@ -11,9 +11,9 @@ import CreatePostPage from './pages/CreatePost'
 import PostPage from './pages/PostPage'
 import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
+import UsersList from './pages/Users'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
-import UsersList from './pages/Users'
 import FollowingPage from './pages/FollowingPage'
 
 function App() {
@@ -29,41 +29,41 @@ function App() {
         <Route
           path='/Feed'
           element={
-            <IsPrivate>
+            <PrivateRoute>
               <Feed />
-            </IsPrivate>
+            </PrivateRoute>
           }
         />
         <Route
           path='/posts/:postId'
           element={
-            <IsPrivate>
+            <PrivateRoute>
               <PostPage />
-            </IsPrivate>
+            </PrivateRoute>
           }
         />
         <Route
           path='/posts/:postId/edit'
           element={
-            <IsPrivate>
+            <PrivateRoute>
               <EditPostPage />
-            </IsPrivate>
+            </PrivateRoute>
           }
         />
         <Route
           path='/Profile'
           element={
-            <IsPrivate>
+            <PrivateRoute>
               <Profile />
-            </IsPrivate>
+            </PrivateRoute>
           }
         />
         <Route
           path='/NewPost'
           element={
-            <IsPrivate>
+            <PrivateRoute>
               <CreatePostPage />
-            </IsPrivate>
+            </PrivateRoute>
           }
         />
 
