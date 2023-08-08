@@ -5,12 +5,14 @@ import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import PostForm from "../components/PostForm";
 import { apiBaseUrl } from "../config";
+import CloudinaryUpload from "../components/CloudinaryUpload";
 
 function EditPostPage() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  const [allMedia, setAllMedia] = useState([]);
   const nav = useNavigate();
 
   const fetchPost = async () => {
@@ -28,6 +30,7 @@ function EditPostPage() {
       const post = response.data;
       console.log(post);
       setPost(post);
+      setAllMedia(post.media);
     } catch (error) {
       console.log("Error fetching post", error);
     }
@@ -46,9 +49,10 @@ function EditPostPage() {
     try {
       const token = localStorage.getItem("authToken");
 
+      const postDataWithMedia = { ...payload, media: allMedia };
       const response = await axios.put(
         `${apiBaseUrl}/posts/${postId}`,
-        payload,
+        postDataWithMedia,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -84,6 +88,9 @@ function EditPostPage() {
     }
   };
 
+  const updateMediaList = (updatedMedia) => {
+    setAllMedia(updatedMedia);
+  };
 
   const isAuthor = post.author === user._id;
 
@@ -92,6 +99,7 @@ function EditPostPage() {
       <h1>Edit Post</h1>
       {isAuthor ? (
         <>
+          <CloudinaryUpload initialMedia={allMedia} onMediaUpdated={updateMediaList} />
           <PostForm
             onSubmit={async (updatedPostData) => {
               console.log("Updated post data:", updatedPostData);

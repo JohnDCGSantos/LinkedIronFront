@@ -5,6 +5,8 @@ import axios from "axios";
 import Likes from "./Likes";
 import Comments from "./Comments";
 import Actions from "./Actions";
+import { CloudinaryContext, Image, Video } from "cloudinary-react";
+import { Carousel } from 'react-bootstrap';
 
 const Post = ({ post, isCompact, isEditable }) => {
   const [comments, setComments] = useState(
@@ -63,9 +65,39 @@ const Post = ({ post, isCompact, isEditable }) => {
     }
   };
 
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+
   return (
     <div className="card mb-3">
-      <img src={post.image_url} className="card-img-top" alt="Post image" />
+      {post.media.length > 0 && (
+        <CloudinaryContext cloudName={cloudName}>
+        <Carousel>
+          {post.media.map((item) => {
+            const itemSplit = item.split('/');
+            const resourceType = itemSplit[0];
+            const publicId = itemSplit[1];
+            return (
+              <Carousel.Item key={publicId}>
+                <div className="media-item position-relative">
+                  <div>
+                    {resourceType === 'image' ? (
+                      <Image publicId={publicId} width="300" crop="scale" />
+                    ) : (
+                      <Video
+                        publicId={publicId}
+                        controls
+                        width="300"
+                        crop="scale"
+                      />
+                    )}
+                  </div>
+                </div>
+              </Carousel.Item>
+            );
+          })}
+        </Carousel>
+      </CloudinaryContext>
+      )}
       <div className="card-body">
         <h5 className="card-title">{post.title}</h5>
         <p className="card-text">{post.content}</p>
@@ -80,7 +112,11 @@ const Post = ({ post, isCompact, isEditable }) => {
           <Actions postId={post._id} addComment={handleNewComment} />
         </div>
         {comments.length > 0 && (
-          <Comments comments={comments} onDeleteComment={deleteComment} onUpdateComment={editComment} />
+          <Comments
+            comments={comments}
+            onDeleteComment={deleteComment}
+            onUpdateComment={editComment}
+          />
         )}
         {isCompact && (
           <Link to={`/posts/${post._id}`} className="btn btn-primary mr-2">

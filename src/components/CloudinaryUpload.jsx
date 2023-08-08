@@ -67,42 +67,58 @@ const CloudinaryUpload = ({initialMedia, onMediaUpdated}) => {
   };
 
   return (
-    <div>
+    <div className="container mt-4">
       <h4>Upload your media</h4>
-      <input
-        type="file"
-        accept="image/*, video/*"
-        onChange={handleFileChange}
-      />
+      <div className="mb-3">
+        <input
+          type="file"
+          accept="image/*, video/*"
+          className="form-control"
+          onChange={handleFileChange}
+        />
+      </div>
       {confirmUpload && (
         <>
-          <button onClick={uploadImage} disabled={uploading}>
-            {uploading ? "Uploading..." : "Confirm Upload"}
+          <button
+            className="btn btn-primary"
+            onClick={uploadImage}
+            disabled={uploading}
+          >
+            {uploading ? 'Uploading...' : 'Confirm Upload'}
           </button>
           <p>Click the button above to confirm the upload.</p>
         </>
       )}
       <CloudinaryContext cloudName={cloudName}>
-        {media.map((item) => {
-          const itemSplit = item.split("/");
-          const resourceType = itemSplit[0];
-          const publicId = itemSplit[1];
-          return (
-            <div key={publicId} className="media-item position-relative">
-              {resourceType === "image" ? (
-                <Image publicId={publicId} width="300" crop="scale" />
-              ) : (
-                <Video publicId={publicId} controls width="300" crop="scale" />
-              )}
-              <button
-                className="btn btn-danger btn-sm position-absolute top-0"
-                onClick={() => deleteMedia(publicId)}
-              >
-                <i className="bi bi-trash"></i>
-              </button>
-            </div>
-          );
-        })}
+        <div className="row">
+          {media.map((item) => {
+            const itemSplit = item.split('/');
+            const resourceType = itemSplit[0];
+            const publicId = itemSplit[1];
+            return (
+              <div key={publicId} className="media-item position-relative">
+                <div >
+                  {resourceType === 'image' ? (
+                    <Image publicId={publicId} width="300" crop="scale" />
+                  ) : (
+                    <Video
+                      publicId={publicId}
+                      controls
+                      width="300"
+                      crop="scale"
+                    />
+                  )}
+                  <button
+                    className="btn btn-danger btn-sm position-absolute top-0"
+                    onClick={() => deleteMedia(publicId)}
+                  >
+                    <i className="bi bi-trash"></i>
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </CloudinaryContext>
     </div>
   );
