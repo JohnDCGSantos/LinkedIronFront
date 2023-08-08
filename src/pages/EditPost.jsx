@@ -45,7 +45,6 @@ function EditPostPage() {
     try {
       const token = localStorage.getItem("authToken");
 
-      console.log("->"+payload.category);
       const response = await axios.put(
         `http://localhost:5005/posts/${postId}`,
         payload,
@@ -64,23 +63,47 @@ function EditPostPage() {
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+
+      const response = await axios.delete(
+        `http://localhost:5005/posts/${postId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.status === 200) {
+        nav(`/feed`);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+
   const isAuthor = post.author === user._id;
 
   return (
     <div>
       <h1>Edit Post</h1>
       {isAuthor ? (
-        <PostForm
-          onSubmit={async (updatedPostData) => {
-            console.log("Updated post data:", updatedPostData);
-            await handleSubmit(updatedPostData);
-          }}
-          defaultValues={{
-            title: post.title,
-            content: post.content,
-            category: post.category,
-          }}
-        />
+        <>
+          <PostForm
+            onSubmit={async (updatedPostData) => {
+              console.log("Updated post data:", updatedPostData);
+              await handleSubmit(updatedPostData);
+            }}
+            defaultValues={{
+              title: post.title,
+              content: post.content,
+              category: post.category,
+            }}
+          />
+          <button className="btn btn-danger" onClick={handleDelete}>Delete post</button>
+        </>
       ) : (
         <p>You are not authorized to edit this post.</p>
       )}
