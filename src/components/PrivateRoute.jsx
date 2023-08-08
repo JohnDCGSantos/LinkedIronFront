@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Navigate } from "react-router-dom";
 import { AuthContext } from "../context/Auth.context";
 
-function IsPrivate( { children } ) {
+function PrivateRoute( { children } ) {
   
   const { isLoggedIn, isLoading } = useContext(AuthContext);
 
@@ -18,4 +18,4 @@ function IsPrivate( { children } ) {
   }
 }
 
-export default IsPrivate;
+export default PrivateRoute;
