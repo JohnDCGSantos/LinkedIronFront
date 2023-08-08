@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { apiBaseUrl } from '../config'
 
 const FollowerList = () => {
   const [followerUsers, setFollowerUsers] = useState([])
@@ -10,7 +11,7 @@ const FollowerList = () => {
 
     const fetchFollowerUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5005/follow/followers', {
+        const response = await axios.get(`${apiBaseUrl}/follow/followers`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
