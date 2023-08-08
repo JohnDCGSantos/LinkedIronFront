@@ -2,6 +2,7 @@ import axios from "axios";
 import PostForm from "../components/PostForm";
 import { useNavigate } from "react-router";
 import { apiBaseUrl } from "../config";
+import CloudinaryUpload from "../components/CloudinaryUpload";
 
 function CreatePostPage() {
   const nav = useNavigate();
@@ -29,7 +30,7 @@ function CreatePostPage() {
   return (
     <div>
       <h1>Create your post here</h1>
-
+      <CloudinaryUpload/>
       <PostForm
         onSubmit={async (postData) => {
           console.log("Creating post with data:", postData);
