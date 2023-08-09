@@ -82,7 +82,7 @@ const LikeButton = ( { postId, likePostId, onLike, onUnlike } ) => {
    
     <button onClick={isLiked ? handleUnlike : handleLike} disabled={isLoading}>
     
-        {isLiked ? '😥' : '💙'}
+        {isLiked ? 'Unlike' : 'Like'}
       
         </button>
     <span>{likesCount}</span>
