@@ -11,6 +11,11 @@ import { Carousel } from "react-bootstrap";
 const Post = ({ post, isCompact, isEditable }) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleString();
+  };
+
   const [comments, setComments] = useState(
     isCompact ? post.comments.slice(0, 3) : post.comments
   );
@@ -77,7 +82,7 @@ const Post = ({ post, isCompact, isEditable }) => {
               const resourceType = itemSplit[0];
               const publicId = itemSplit[1];
               return (
-                <Carousel.Item key={publicId} interval={5000} style={{width: "100%"}}>
+                <Carousel.Item key={publicId} interval={5000}>
                   <div className="carousel-item-wrapper">
                     {resourceType === "image" ? (
                       <Image publicId={publicId} width="300" crop="scale" />
@@ -103,7 +108,7 @@ const Post = ({ post, isCompact, isEditable }) => {
           <small className="text-muted">Category: {post.category}</small>
         </p>
         <p className="card-text">
-          <small className="text-muted">Created at: {post.createdAt}</small>
+          <small className="text-muted">By: {post.author.username} on {formatDate(post.createdAt)}</small>
         </p>
         <Likes />
         <div className="card-footer">
