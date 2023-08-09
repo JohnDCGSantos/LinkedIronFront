@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { apiBaseUrl } from '../config'
-//import LikeButton from './LikeButton'
 
 const PostItem = () => {
   const [posts, setPosts] = useState([])
@@ -29,25 +28,29 @@ const PostItem = () => {
   }, [])
 
   const handleLike = likePostId => {
+    // Logic to handle follow action
     console.log(`Liked user ${likePostId}`)
   }
 
   return (
-    <div>
+    <>
       <p>Posts: </p>
-      {posts.map(post => (
-        <div key={post._id}>
-          <img src={post.image_url} alt='beerImg' style={{ width: '70px' }} />
-          <h1>{post.author}</h1>
-          <p>{post.title}</p>
-          <p>{post.content}</p>
-          <h1>{post.category}</h1>
-          <p>{post.createdAt}</p>
-          <button onClick={() => handleLike(post._id)}>{post.likes} Likes</button>
-          <Link to={`/posts/${post._id}`}>Check the details</Link>
-        </div>
-      ))}
-    </div>
+      {posts.map(post => {
+        return (
+          <div key={post._id}>
+            <img src={post.image_url} alt='beerImg' style={{ width: '70px' }} />
+            <h1>{post.author}</h1>
+            <p>{post.title}</p>
+            <p>{post.content}</p>
+            <h1>{post.category}</h1>
+            <p>{post.createdAt}</p>
+            <button onClick={() => handleLike(post._id)}>{post.likes} Likes </button>
+
+            <Link to={`/posts/${post._id}`}>Check the details</Link>
+          </div>
+        )
+      })}
+    </>
   )
 }
 

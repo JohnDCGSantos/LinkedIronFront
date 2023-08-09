@@ -30,7 +30,10 @@ const Feed = () => {
 
     fetchAllPosts()
   }, [])
+  
 
+  
+ 
   return (
     <div>
       <h1>Feed</h1>
@@ -40,12 +43,15 @@ const Feed = () => {
       ) : (
         <div>
           {posts.map(post => {
+           
             const isAuthor = post.author === user._id
-
+            /* const postId = {post._id} */
             return <Post key={post._id} post={post} isEditable={isAuthor} isCompact={true} />
+          
           })}
         </div>
       )}
+      
     </div>
   )
 }

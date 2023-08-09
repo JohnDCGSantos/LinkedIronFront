@@ -5,8 +5,17 @@ import axios from 'axios'
 import Likes from './Likes'
 import Comments from './Comments'
 import Actions from './Actions'
+import { CloudinaryContext, Image, Video } from 'cloudinary-react'
+import { Carousel } from 'react-bootstrap'
 
 const Post = ({ post, isCompact, isEditable }) => {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+
+  const formatDate = timestamp => {
+    const date = new Date(timestamp)
+    return date.toLocaleString()
+  }
+
   const [comments, setComments] = useState(isCompact ? post.comments.slice(0, 3) : post.comments)
 
   const handleNewComment = comment => {
@@ -58,7 +67,28 @@ const Post = ({ post, isCompact, isEditable }) => {
 
   return (
     <div className='card mb-3'>
-      <img src={post.image_url} className='card-img-top' alt='Post image' />
+      {post.media.length > 0 && (
+        <CloudinaryContext cloudName={cloudName}>
+          <Carousel data-bs-theme='dark'>
+            {post.media.map(item => {
+              const itemSplit = item.split('/')
+              const resourceType = itemSplit[0]
+              const publicId = itemSplit[1]
+              return (
+                <Carousel.Item key={publicId} interval={5000}>
+                  <div className='carousel-item-wrapper'>
+                    {resourceType === 'image' ? (
+                      <Image publicId={publicId} width='300' crop='scale' />
+                    ) : (
+                      <Video publicId={publicId} controls width='300' crop='scale' />
+                    )}
+                  </div>
+                </Carousel.Item>
+              )
+            })}
+          </Carousel>
+        </CloudinaryContext>
+      )}
       <div className='card-body'>
         <h5 className='card-title'>{post.title}</h5>
         <p className='card-text'>{post.content}</p>
@@ -66,7 +96,10 @@ const Post = ({ post, isCompact, isEditable }) => {
           <small className='text-muted'>Category: {post.category}</small>
         </p>
         <p className='card-text'>
-          <small className='text-muted'>Created at: {post.createdAt}</small>
+          <small className='text-muted'>
+            By: {post.author ? post.author.username : 'DELETED USER'} on{' '}
+            {formatDate(post.createdAt)}
+          </small>
         </p>
         <Likes postId={post._id} />
         <div className='card-footer'>
