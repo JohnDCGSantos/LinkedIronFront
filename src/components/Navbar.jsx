@@ -48,6 +48,11 @@ const Navbar = () => {
                     Network Users
                   </Link>
                 </li>
+                <li className='nav-item'>
+                  <Link className='nav-link' to={'/following'}>
+                    Followers
+                  </Link>
+                </li>
               </ul>
             </div>
             <span className='navbar-text'>

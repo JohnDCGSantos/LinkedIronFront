@@ -28,6 +28,10 @@ const PostItem = () => {
     fetchAllPosts()
   }, [])
 
+  const handleLike = likePostId => {
+    console.log(`Liked user ${likePostId}`)
+  }
+
   return (
     <div>
       <p>Posts: </p>
@@ -39,7 +43,7 @@ const PostItem = () => {
           <p>{post.content}</p>
           <h1>{post.category}</h1>
           <p>{post.createdAt}</p>
-
+          <button onClick={() => handleLike(post._id)}>{post.likes} Likes</button>
           <Link to={`/posts/${post._id}`}>Check the details</Link>
         </div>
       ))}
