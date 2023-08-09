@@ -52,7 +52,7 @@ function UsersList() {
 
   return (
     <div className='users-list-container'>
-      <h2>Users List</h2>
+      <h2>Iron Users</h2>
       <input
         type='text'
         placeholder='Search users by name'
