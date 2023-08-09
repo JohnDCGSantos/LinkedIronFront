@@ -1,15 +1,18 @@
 import { useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { apiBaseUrl } from "../config";
+import { CloudinaryContext, Image, Video } from "cloudinary-react";
+import CloudinaryUpload from "./CloudinaryUpload";
 
 const UserCard = ({ user }) => {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const { logOutUser, updateUser } = useContext(AuthContext);
-
   const defaultImageUrl = `${
     import.meta.env.BASE_URL
   }images/blank-profile-picture.png`;
+
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [editedUser, setEditedUser] = useState({
@@ -17,6 +20,7 @@ const UserCard = ({ user }) => {
     email: user.email,
     bootcamp: user.bootcamp,
     graduationDate: user.graduationDate,
+    image: user.image,
   });
   const navigate = useNavigate();
 
@@ -31,6 +35,7 @@ const UserCard = ({ user }) => {
       email: user.email,
       bootcamp: user.bootcamp,
       graduationDate: user.graduationDate,
+      image: user.image,
     });
   };
 
@@ -51,16 +56,13 @@ const UserCard = ({ user }) => {
 
   const handleUpdate = async () => {
     try {
+      console.log(editedUser);
       const tokenInStorage = localStorage.getItem("authToken");
-      const request = await axios.put(
-        `${apiBaseUrl}/users/`,
-        editedUser,
-        {
-          headers: {
-            Authorization: `Bearer ${tokenInStorage}`,
-          },
-        }
-      );
+      const request = await axios.put(`${apiBaseUrl}/users/`, editedUser, {
+        headers: {
+          Authorization: `Bearer ${tokenInStorage}`,
+        },
+      });
       updateUser(request.data);
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -91,11 +93,41 @@ const UserCard = ({ user }) => {
 
   return (
     <div className="card">
-      <img
-        src={user.image ? user.image : defaultImageUrl}
-        className="card-img-top"
-        alt="User image"
-      />
+      {isEditing ? (
+        <CloudinaryUpload
+          allowMultiple={false}
+          initialMedia={user.image ? [user.image] : []}
+          onMediaUpdated={(updatedMedia) =>
+            setEditedUser((prevUser) => ({
+              ...prevUser,
+              image: updatedMedia[0] ? updatedMedia[0] : "",
+            }))
+          }
+        />
+      ) : user.image ? (
+        <CloudinaryContext cloudName={cloudName}>
+          <div className="media-item position-relative">
+            <div>
+              {user.image.startsWith("image/") ? (
+                <Image
+                  publicId={user.image.split("/")[1]}
+                  width="300"
+                  crop="scale"
+                />
+              ) : (
+                <Video
+                  publicId={user.image.split("/")[1]}
+                  controls
+                  width="300"
+                  crop="scale"
+                />
+              )}
+            </div>
+          </div>
+        </CloudinaryContext>
+      ) : (
+        <img src={defaultImageUrl} className="card-img-top" alt="User image" />
+      )}
       <div className="card-body">
         {isEditing ? (
           <>

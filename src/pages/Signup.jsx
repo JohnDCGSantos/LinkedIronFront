@@ -1,87 +1,71 @@
-import axios from 'axios'
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import axios from "axios";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiBaseUrl } from "../config";
+import CloudinaryUpload from "../components/CloudinaryUpload";
 
 const Signup = () => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [image, setImage] = useState('')
-  const [bootcamp, setBootcamp] = useState('')
-  const [graduationDate, setGraduationDate] = useState('')
-  /*     const [isLoading, setIsLoading] = useState(false);
-   */ const nav = useNavigate()
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [image, setImage] = useState("");
+  const [bootcamp, setBootcamp] = useState("");
+  const [graduationDate, setGraduationDate] = useState("");
+  const nav = useNavigate();
 
-  const handleSignup = async e => {
-    e.preventDefault()
-    /*     setIsLoading(true);
-     */
+  const handleSignup = async (e) => {
+    e.preventDefault();
 
     try {
       const res = await axios.post(
         `${apiBaseUrl}/auth/signup`,
 
-        { username, email, password, image, bootcamp, graduationDate },
-        
-        )
+        { username, email, password, image, bootcamp, graduationDate }
+      );
       {
-        setUsername('')
-        setEmail('')
-        setPassword('')
-        setImage('')
-        setBootcamp('')
-        setGraduationDate('')
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setImage("");
+        setBootcamp("");
+        setGraduationDate("");
       }
 
-      console.log('here is the signup response', res.data)
-      nav('/Login')
+      console.log("here is the signup response", res.data);
+      nav("/Login");
     } catch (error) {
-      console.error(error)
+      console.error(error);
     }
-    /* setIsLoading(false);
-     */
-  }
-  /* const handleFileChange = (event) => {
-    const selectedFile = event.target.files[0];
-    setImage(selectedFile);
-  }; */
-
-   /* const handleDragOver = (event) => {
-    event.preventDefault();
   };
 
-  const handleDrop = (event) => {
-    event.preventDefault();
-    const selectedFile = event.dataTransfer.files[0];
-    setImage(selectedFile);
-  }; */
-
-
   const formStyle = {
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '400px',
-    margin: '0 auto',
-    padding: '20px',
-    border: '1px solid #ccc',
-    borderRadius: '5px',
-  }
+    display: "flex",
+    flexDirection: "column",
+    maxWidth: "400px",
+    margin: "0 auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "5px",
+  };
 
   const inputStyle = {
-    padding: '5px',
-    borderRadius: '3px',
-    border: '1px solid #ccc',
-  }
+    padding: "5px",
+    borderRadius: "3px",
+    border: "1px solid #ccc",
+  };
 
   const buttonStyle = {
-    padding: '10px 20px',
-    borderRadius: '5px',
-    background: '#007bff',
-    color: '#fff',
-    border: 'none',
-    cursor: 'pointer',
-  }
+    padding: "10px 20px",
+    borderRadius: "5px",
+    background: "#007bff",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+  };
+
+  const updatePhoto = (updatedMedia) => {
+    setImage(updatedMedia[0]);
+  };
 
   return (
     <div>
@@ -89,84 +73,61 @@ const Signup = () => {
       <form onSubmit={handleSignup} style={formStyle}>
         <input
           style={inputStyle}
-          type='text'
+          type="text"
           value={username}
           required
-          onChange={event => {
-            setUsername(event.target.value)
+          onChange={(event) => {
+            setUsername(event.target.value);
           }}
-          placeholder='Username'
+          placeholder="Username"
         />
-
         <input
           style={inputStyle}
-          type='email'
+          type="email"
           value={email}
           required
-          onChange={event => {
-            setEmail(event.target.value)
+          onChange={(event) => {
+            setEmail(event.target.value);
           }}
-          placeholder='Email'
+          placeholder="Email"
         />
-
         <input
           style={inputStyle}
-          type='password'
+          type="password"
           value={password}
           required
-          onChange={event => {
-            setPassword(event.target.value)
+          onChange={(event) => {
+            setPassword(event.target.value);
           }}
-          placeholder='Password'
+          placeholder="Password"
         />
-
+        <CloudinaryUpload allowMultiple={false} initialMedia={[]} onMediaUpdated={updatePhoto} />
         <input
           style={inputStyle}
-          type='text'
-          value={image}
-          required
-          onChange={event => {
-            setImage(event.target.value)
-          }}
-          placeholder='Image'
-        />  {/* <div onDragOver={handleDragOver}
-        onDrop={handleDrop}
-        style={{ border: '2px dashed #ccc', padding: '20px' }}>
-{image ? (
-          <p>Selected File: {image.name}</p>
-        ) : (
-          <p>Drag and drop a file here or click to select a file</p>
-        )}
-
-        </div> */}
-
-        <input
-          style={inputStyle}
-          type='text'
+          type="text"
           value={bootcamp}
           required
-          onChange={event => {
-            setBootcamp(event.target.value)
+          onChange={(event) => {
+            setBootcamp(event.target.value);
           }}
-          placeholder='Bootcamp'
+          placeholder="Bootcamp"
         />
-
         <input
           style={inputStyle}
-          type='date'
+          type="date"
           value={graduationDate}
           required
-          onChange={event => {
-            setGraduationDate(event.target.value)
+          onChange={(event) => {
+            setGraduationDate(event.target.value);
           }}
-          placeholder='Graduation Date'
+          placeholder="Graduation Date"
         />
-        <button style={buttonStyle} type='submit'>
+        <button style={buttonStyle} type="submit">
           Signup
         </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Signup
+export default Signup;
