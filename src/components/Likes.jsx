@@ -1,78 +1,91 @@
 import { useState, useEffect } from "react";
 import axios from 'axios'
+import { apiBaseUrl } from "../config";
 
-const LikeButton = ( { postId } ) => {
-    const [likes, setLikes] = useState(0);
+const LikeButton = ( { postId, likePostId, onLike, onUnlike } ) => {
     const [isLiked, setIsLiked] = useState(false)
+    const [likesCount, setLikesCount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
-        // Fetch the initial like count from the backend when the component mounts
-        fetchLikes();
+      const isPostLiked = localStorage.getItem(`like_${postId}`)
+      setIsLiked(!!isPostLiked)
+
+      fetchLikesCount();
       }, [postId]);
 
-    const fetchLikes = async () => {
+      const fetchLikesCount = async () => {
         try {
-          const response = await axios.get(`http://localhost:5005/posts/posts`);
-          const post = response.data;
-          setLikes(post.likes);
+          const token = localStorage.getItem('authToken')
+
+          const response = await axios.get(`${apiBaseUrl}/posts/${postId}/like`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          const totalNumber = response.data.likesCount
+          setLikesCount(totalNumber);
         } catch (error) {
-          console.error('Error fetching likes:', error);
+          console.error('Error fetching likes count:', error);
         }
       };
 
     const handleLike = async () => {
         try {
+          setIsLoading(true)
             const token = localStorage.getItem('authToken');
-    
-          const response = await axios.post(`http://localhost:5005/posts/${postId}/like`,
-          {
-            postId,
-            likes,
-          },
+             await axios.post(`${apiBaseUrl}/posts/${postId}/like`, null,
+          
           {
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-            const updatedPost = response.data;
-            setLikes(updatedPost.likes + 1);
-            setIsLiked(true);
-          console.log(updatedPost)
+          setIsLiked(true);
+          
+          localStorage.setItem(`like_${postId}`, 'true');
+          setLikesCount(likesCount + 1);
+
+          onLike && onLike();
+          setIsLoading(false);
         } catch (error) {
           console.error('Error liking post:', error);
+          setIsLoading(false);
         }
       };
 
-      const handleUnlike = async () => {
+       const handleUnlike = async () => {
         try {
+          setIsLoading(true)
             const token = localStorage.getItem('authToken');
 
-          const response = await axios.post(`http://localhost:5005/posts/${postId}/like`,
-          {
-            postId,
-            likes,
-          },
-          {
+            await axios.delete(`${apiBaseUrl}/posts/${postId}/like`,{
+            data: { postId, unlikePostId: likePostId },
             headers: {
               Authorization: `Bearer ${token}`,
             },
           });
-            const updatedPost = response.data;
-            setLikes(likes - 1);
-            setIsLiked(false);
-            console.log(updatedPost)
+          setIsLiked(false);
+          localStorage.removeItem(`like_${postId}`)
+          setLikesCount(likesCount - 1);
+          onUnlike && onUnlike()
+          setIsLoading(false);
         } catch (error) {
           console.error('Error unliking post:', error);
+          setIsLoading(false);
         }
       };
+
 
     return (
     <>
    
-    <button onClick={isLiked ? handleUnlike : handleLike}>
-        {isLiked ? 'Unlike' : 'Like'}</button>
+    <button onClick={isLiked ? handleUnlike : handleLike} disabled={isLoading}>
+        {isLiked ? 'Unlike' : 'Like'}
+      
+        </button>
+    <span>{likesCount}</span>
     
-    <span>{likes} Likes</span>
         </>
         )
 }

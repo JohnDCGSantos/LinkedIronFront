@@ -51,7 +51,7 @@ const Post = ({ post, isCompact, isEditable }) => {
         <p className="card-text">
           <small className="text-muted">Created at: {post.createdAt}</small>
         </p>
-        <Likes />
+        <Likes postId={post._id} />
         <div className="card-footer">
           <Actions postId={post._id} addComment={handleNewComment} />
         </div>

@@ -1,12 +1,10 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import PostForm from './PostForm'
 import { apiBaseUrl } from "../config";
 
 function PostItem() {
   const [posts, setPosts] = useState([])
-  const [likes, setLikes] = useState(0)
 
   const fetchAllPosts = async () => {
     const token = localStorage.getItem('authToken')
@@ -24,13 +22,16 @@ function PostItem() {
       console.log('Error fetching all posts', error)
     }
   }
-  const handleNewPost = newPost => {
-    setPosts([...posts, newPost])
-  }
+
 
   useEffect(() => {
     fetchAllPosts()
   }, [])
+  
+  const handleLike = likePostId => {
+    // Logic to handle follow action
+    console.log(`Liked user ${likePostId}`)
+  }
 
   return (
     <>
@@ -43,7 +44,9 @@ function PostItem() {
           <p>{post.content}</p>
           <h1>{post.category}</h1>
           <p>{post.createdAt}</p>
-          <Likes postId={post._id} />
+          <button onClick={() => handleLike(post._id)}>
+          { post.likes} Likes </button>
+          
           <Link to={`/posts/${post._id}`}>Check the details</Link>
         </div>;
       })}
@@ -51,4 +54,4 @@ function PostItem() {
   )
 }
 
-export default PostItem
+export default PostItem;
