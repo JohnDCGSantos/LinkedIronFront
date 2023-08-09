@@ -2,11 +2,13 @@ import { useContext, useEffect, useState } from 'react'
 import axios from 'axios'
 import FollowButton from '../components/FollowButton'
 import { AuthContext } from '../context/Auth.context'
-import { apiBaseUrl } from "../config";
+import '../Users.css'
+import { apiBaseUrl } from '../config'
 
 function UsersList() {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [searchQuery, setSearchQuery] = useState('')
   const authContext = useContext(AuthContext) // Use the AuthContext directly
 
   useEffect(() => {
@@ -39,21 +41,30 @@ function UsersList() {
     // Logic to handle unfollow action
     console.log(`Unfollowed user ${followUserId}`)
   }
-
   if (isLoading) {
     return <div>Loading...</div>
   }
-  const filteredUsers = users.filter(user => user._id !== authContext.user._id)
+  const filteredUsers = users.filter(
+    user =>
+      user._id !== authContext.user._id &&
+      user.username.toLowerCase().includes(searchQuery.toLowerCase()) // Filter users by search query
+  )
 
   return (
-    <div>
+    <div className='users-list-container'>
       <h2>Users List</h2>
-      <ul>
+      <input
+        type='text'
+        placeholder='Search users by name'
+        value={searchQuery}
+        onChange={e => setSearchQuery(e.target.value)}
+      />
+      <ul className='users-list'>
         {filteredUsers.map(user => (
-          <li key={user._id}>
+          <li key={user._id} className='user-item'>
             {user.username}
             <FollowButton
-              userId={authContext.user._id} // Use the user's ID from the context
+              userId={authContext.user._id}
               followUserId={user._id}
               onFollow={() => handleFollow(user._id)}
               onUnfollow={() => handleUnfollow(user._id)}
@@ -66,61 +77,3 @@ function UsersList() {
 }
 
 export default UsersList
-
-/*import { useEffect, useState } from 'react'
-import axios from 'axios'
-import FollowButton from '../components/FollowButton'
-
-function UsersList() {
-  const [users, setUsers] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchUsers = async () => {
-      const token = localStorage.getItem('authToken')
-      try {
-        const response = await axios.get('http://localhost:5005/api/users', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        const usersData = response.data
-        setUsers(usersData)
-        setIsLoading(false)
-      } catch (error) {
-        console.log('Error fetching users', error)
-        setIsLoading(false)
-      }
-    }
-
-    fetchUsers()
-  }, [])
-
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
-
-  return (
-    <div>
-      <h2>Users List</h2>
-      <ul>
-        {users.map(user => (
-          <li key={user._id}>
-            {user.username}
-            <FollowButton
-              userId={user._id} // Replace this with the ID of the currently logged-in user
-              onFollow={() => {
-                console.log(`Followed user ${user._id}`)
-              }}
-              onUnfollow={() => {
-                console.log(`Unfollowed user ${user._id}`)
-              }}
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
-  )
-}
-
-export default UsersList*/

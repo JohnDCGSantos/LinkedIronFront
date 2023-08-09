@@ -11,10 +11,11 @@ import CreatePostPage from './pages/CreatePost'
 import PostPage from './pages/PostPage'
 import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import UsersList from './pages/Users'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+import FollowingPage from './pages/FollowingPage'
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path='/' element={<HomePage />} />
         <Route path='/Login' element={<Login />} />
         <Route path='/Signup' element={<Signup />} />
+        <Route path='/following' element={<FollowingPage />} />
 
         <Route
           path='/Feed'
