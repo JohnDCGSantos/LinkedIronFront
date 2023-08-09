@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
 import { apiBaseUrl } from "../config";
+import LikeButton from "./Likes";
 
-const Actions = ({ postId, addComment }) => {
+const Actions = ({ postId, addComment, likeUpdated }) => {
   const [isCommentVisible, setIsCommentVisible] = useState(false);
   const [comment, setComment] = useState("");
 
@@ -41,28 +42,25 @@ const Actions = ({ postId, addComment }) => {
 
   const handleShare = () => {
     const postLink = `${apiBaseUrl}/posts/${postId}`;
-  
-    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(postLink)}`;
-    
+
+    const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+      postLink
+    )}`;
+
     window.open(linkedinShareUrl);
   };
-  
 
   return (
     <div className="d-flex justify-content-between align-items-center flex-column">
       <div className="d-flex justify-content-between">
-        <button className="btn btn-outline-primary">
-          <i className="bi bi-hand-thumbs-up"></i> Like
-        </button>
+        <LikeButton postId={postId} onLike={() => likeUpdated(true)} onUnlike={() =>likeUpdated(false)} />
         <button
           className="btn btn-outline-secondary"
           onClick={toggleCommentSection}
         >
           <i className="bi bi-chat-dots"></i> Comment
         </button>
-        <button 
-          className="btn btn-outline-secondary"
-          onClick={handleShare}>
+        <button className="btn btn-outline-secondary" onClick={handleShare}>
           <i className="bi bi-share"></i> Share
         </button>
       </div>
