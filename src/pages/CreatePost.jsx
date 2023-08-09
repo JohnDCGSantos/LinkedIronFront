@@ -33,7 +33,7 @@ function CreatePostPage() {
   return (
     <div>
       <h1>Create your post here</h1>
-      <CloudinaryUpload initialMedia={[]} onMediaUpdated={updateMediaList} />
+      <CloudinaryUpload initialMedia={[]} onMediaUpdated={updateMediaList} allowMultiple={true} />
       <PostForm
         onSubmit={async (postData) => {
           console.log("Creating post with data:", postData);

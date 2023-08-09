@@ -9,6 +9,8 @@ import { CloudinaryContext, Image, Video } from "cloudinary-react";
 import { Carousel } from "react-bootstrap";
 
 const Post = ({ post, isCompact, isEditable }) => {
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+
   const [comments, setComments] = useState(
     isCompact ? post.comments.slice(0, 3) : post.comments
   );
@@ -64,8 +66,6 @@ const Post = ({ post, isCompact, isEditable }) => {
       console.error(error);
     }
   };
-
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 
   return (
     <div className="card mb-3">

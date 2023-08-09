@@ -99,7 +99,7 @@ function EditPostPage() {
       <h1>Edit Post</h1>
       {isAuthor ? (
         <>
-          <CloudinaryUpload initialMedia={allMedia} onMediaUpdated={updateMediaList} />
+          <CloudinaryUpload initialMedia={allMedia} onMediaUpdated={updateMediaList} allowMultiple={true} />
           <PostForm
             onSubmit={async (updatedPostData) => {
               console.log("Updated post data:", updatedPostData);
