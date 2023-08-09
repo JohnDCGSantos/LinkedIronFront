@@ -3,7 +3,7 @@ import axios from 'axios'
 import Post from '../components/Post'
 import { AuthContext } from '../context/Auth.context'
 import { apiBaseUrl } from '../config'
-
+import CategorySearch from '../components/CategorySearch.jsx'
 const Feed = () => {
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -34,7 +34,7 @@ const Feed = () => {
   return (
     <div>
       <h1>Feed</h1>
-
+      <CategorySearch />
       {isLoading ? (
         <p>Loading...</p>
       ) : (
