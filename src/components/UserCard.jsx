@@ -91,12 +91,14 @@ const UserCard = ({ user }) => {
     return <div>Loading...</div>;
   }
 
+  const hasCloudinaryImage = user.image.split("/").length === 2;
+
   return (
     <div className="card">
-      {isEditing ? (
+       {isEditing ? (
         <CloudinaryUpload
           allowMultiple={false}
-          initialMedia={user.image ? [user.image] : []}
+          initialMedia={hasCloudinaryImage ? [user.image] : []}
           onMediaUpdated={(updatedMedia) =>
             setEditedUser((prevUser) => ({
               ...prevUser,
@@ -104,7 +106,7 @@ const UserCard = ({ user }) => {
             }))
           }
         />
-      ) : user.image ? (
+      ) : hasCloudinaryImage ? (
         <CloudinaryContext cloudName={cloudName}>
           <div className="media-item position-relative">
             <div>
@@ -127,7 +129,7 @@ const UserCard = ({ user }) => {
         </CloudinaryContext>
       ) : (
         <img src={defaultImageUrl} className="card-img-top" alt="User image" />
-      )}
+      )} 
       <div className="card-body">
         {isEditing ? (
           <>

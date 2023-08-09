@@ -6,7 +6,7 @@ import Likes from "./Likes";
 import Comments from "./Comments";
 import Actions from "./Actions";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
-import { Carousel } from 'react-bootstrap';
+import { Carousel } from "react-bootstrap";
 
 const Post = ({ post, isCompact, isEditable }) => {
   const [comments, setComments] = useState(
@@ -71,16 +71,15 @@ const Post = ({ post, isCompact, isEditable }) => {
     <div className="card mb-3">
       {post.media.length > 0 && (
         <CloudinaryContext cloudName={cloudName}>
-        <Carousel>
-          {post.media.map((item) => {
-            const itemSplit = item.split('/');
-            const resourceType = itemSplit[0];
-            const publicId = itemSplit[1];
-            return (
-              <Carousel.Item key={publicId}>
-                <div className="media-item position-relative">
-                  <div>
-                    {resourceType === 'image' ? (
+          <Carousel data-bs-theme="dark">
+            {post.media.map((item) => {
+              const itemSplit = item.split("/");
+              const resourceType = itemSplit[0];
+              const publicId = itemSplit[1];
+              return (
+                <Carousel.Item key={publicId} interval={5000} style={{width: "100%"}}>
+                  <div className="carousel-item-wrapper">
+                    {resourceType === "image" ? (
                       <Image publicId={publicId} width="300" crop="scale" />
                     ) : (
                       <Video
@@ -91,12 +90,11 @@ const Post = ({ post, isCompact, isEditable }) => {
                       />
                     )}
                   </div>
-                </div>
-              </Carousel.Item>
-            );
-          })}
-        </Carousel>
-      </CloudinaryContext>
+                </Carousel.Item>
+              );
+            })}
+          </Carousel>
+        </CloudinaryContext>
       )}
       <div className="card-body">
         <h5 className="card-title">{post.title}</h5>

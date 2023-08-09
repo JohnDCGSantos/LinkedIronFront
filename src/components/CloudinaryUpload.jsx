@@ -89,7 +89,6 @@ const CloudinaryUpload = ({ initialMedia, onMediaUpdated, allowMultiple }) => {
         </>
       )}
       <CloudinaryContext cloudName={cloudName}>
-        {allowMultiple ? (
           <div className="row">
             {media.map((item) => {
               const itemSplit = item.split('/');
@@ -119,36 +118,6 @@ const CloudinaryUpload = ({ initialMedia, onMediaUpdated, allowMultiple }) => {
               );
             })}
           </div>
-        ) : media.length > 0 ? (
-          <div className="row">
-            <div className="media-item position-relative">
-              <div>
-                {media[0].startsWith("image/") ? (
-                  <Image
-                    publicId={media[0].split("/")[1]}
-                    width="300"
-                    crop="scale"
-                  />
-                ) : (
-                  <Video
-                    publicId={media[0].split("/")[1]}
-                    controls
-                    width="300"
-                    crop="scale"
-                  />
-                )}
-                <button
-                  className="btn btn-danger btn-sm position-absolute top-0"
-                  onClick={() =>
-                    deleteMedia(media[0].split("/")[1])
-                  }
-                >
-                  <i className="bi bi-trash"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : null}
       </CloudinaryContext>
     </div>
   );
