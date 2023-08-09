@@ -108,7 +108,7 @@ const Post = ({ post, isCompact, isEditable }) => {
           <small className="text-muted">Category: {post.category}</small>
         </p>
         <p className="card-text">
-          <small className="text-muted">By: {post.author.username} on {formatDate(post.createdAt)}</small>
+          <small className="text-muted">By: {post.author ? post.author.username : "DELETED USER"} on {formatDate(post.createdAt)}</small>
         </p>
         <Likes />
         <div className="card-footer">

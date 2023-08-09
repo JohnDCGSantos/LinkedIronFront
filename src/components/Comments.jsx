@@ -54,7 +54,7 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                 <p className="card-text">{comment.content}</p>
               )}
               <p className="card-subtitle text-muted">
-                By: {comment.author.username} on {formatDate(comment.createdAt)}
+                By: {comment.author ? comment.author.username : "DELETED USER"} on {formatDate(comment.createdAt)}
               </p>
             </div>
             {user._id === comment.author._id && (
