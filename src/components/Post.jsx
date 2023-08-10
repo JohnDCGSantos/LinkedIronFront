@@ -7,6 +7,7 @@ import Actions from "./Actions";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
 import { Carousel } from "react-bootstrap";
 import { AuthContext } from "../context/Auth.context";
+import UserImage from "./UserImage";
 
 const Post = ({ post, isCompact }) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
@@ -77,7 +78,7 @@ const Post = ({ post, isCompact }) => {
     }
   };
 
-  const isAuthor = post.author._id === user._id;
+  const canEdit = (post.author && post.author._id === user._id) || user.isAdmin;
 
   return (
     <div className="card mb-3">
@@ -115,10 +116,15 @@ const Post = ({ post, isCompact }) => {
           <small className="text-muted">Category: {post.category}</small>
         </p>
         <p className="card-text">
-          <small className="text-muted">
-            By: {post.author ? post.author.username : "DELETED USER"} on{" "}
-            {formatDate(post.createdAt)}
-          </small>
+          <div className="d-flex align-items-start">
+            <UserImage user={post.author} width="30" />
+            <div className="ml-2">
+              <small className="text-muted">
+                By: {post.author ? post.author.username : "DELETED USER"} on{" "}
+                {formatDate(post.createdAt)}
+              </small>
+            </div>
+          </div>
         </p>
         <div className="d-flex align-items-center justify-content-between mt-2">
           <div className="d-flex align-items-center">
@@ -149,7 +155,7 @@ const Post = ({ post, isCompact }) => {
             Read more
           </Link>
         )}
-        {isAuthor && (
+        {canEdit && (
           <Link to={`/posts/${post._id}/edit`} className="btn btn-secondary">
             Edit
           </Link>

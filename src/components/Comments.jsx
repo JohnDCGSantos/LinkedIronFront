@@ -29,13 +29,17 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
     setEditingComment(null);
   };
 
+  const canEditOrAdmin = (comment) => canEdit(comment) || user.isAdmin;
+  const canEdit = (comment) =>
+    (comment.author && comment.author._id === user._id);
+
   return (
     <div>
       <h4 className="mb-3">Comments:</h4>
       {comments.map((comment) => (
         <div key={comment._id} className="mb-3">
           <div className="card">
-          {user._id === comment.author._id && (
+            {canEditOrAdmin(comment) && (
               <div className="d-flex ">
                 <div className="btn-group">
                   <button
@@ -44,11 +48,10 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
                     style={{
-                      backgroundColor: 'transparent', 
-                      borderColor: 'transparent',     
-                      color: 'grey', 
-                      left: '150px' 
-                                     
+                      backgroundColor: "transparent",
+                      borderColor: "transparent",
+                      color: "grey",
+                      left: "150px",
                     }}
                   >
                     <i className="bi bi-three-dots"></i>
@@ -62,14 +65,16 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                         <i className="bi bi-trash"></i> Delete
                       </button>
                     </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => toggleEditingComment(comment)}
-                      >
-                        <i className="bi bi-pencil"></i> Edit
-                      </button>
-                    </li>
+                    {canEdit(comment) && (
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => toggleEditingComment(comment)}
+                        >
+                          <i className="bi bi-pencil"></i> Edit
+                        </button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
@@ -94,7 +99,9 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                       </button>
                     </div>
                   ) : (
-                    <p className="card-text" style={{padding: "4px 10px"}}>{comment.content}</p>
+                    <p className="card-text" style={{ padding: "4px 10px" }}>
+                      {comment.content}
+                    </p>
                   )}
                   <p className="card-subtitle text-muted">
                     By:{" "}
@@ -104,7 +111,6 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                 </div>
               </div>
             </div>
-           
           </div>
         </div>
       ))}
