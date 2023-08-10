@@ -3,15 +3,11 @@ import axios from "axios";
 import { AuthContext } from "../context/Auth.context";
 import { useNavigate } from "react-router-dom";
 import { apiBaseUrl } from "../config";
-import { CloudinaryContext, Image, Video } from "cloudinary-react";
 import CloudinaryUpload from "./CloudinaryUpload";
+import UserImage from "./UserImage";
 
 const UserCard = ({ user }) => {
-  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const { logOutUser, updateUser } = useContext(AuthContext);
-  const defaultImageUrl = `${
-    import.meta.env.BASE_URL
-  }images/blank-profile-picture.png`;
 
   const [isEditing, setIsEditing] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -106,30 +102,7 @@ const UserCard = ({ user }) => {
             }))
           }
         />
-      ) : hasCloudinaryImage ? (
-        <CloudinaryContext cloudName={cloudName}>
-          <div className="media-item position-relative">
-            <div>
-              {user.image.startsWith("image/") ? (
-                <Image
-                  publicId={user.image.split("/")[1]}
-                  width="300"
-                  crop="scale"
-                />
-              ) : (
-                <Video
-                  publicId={user.image.split("/")[1]}
-                  controls
-                  width="300"
-                  crop="scale"
-                />
-              )}
-            </div>
-          </div>
-        </CloudinaryContext>
-      ) : (
-        <img src={defaultImageUrl} className="card-img-top" alt="User image" />
-      )} 
+      ) : <UserImage user={user} />} 
       <div className="card-body">
         {isEditing ? (
           <>

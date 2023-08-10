@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
+import UserImage from "./UserImage";
 
 const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
   const { user } = useContext(AuthContext);
@@ -35,27 +36,34 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
         <div key={comment._id} className="mb-3">
           <div className="card">
             <div className="card-body">
-              {editingComment && editingComment._id === comment._id ? (
-                <div className="card-text">
-                  <textarea
-                    className="form-control"
-                    placeholder="Edit comment..."
-                    value={editingComment.content}
-                    onChange={handleCommentChange}
-                  />
-                  <button
-                    className="btn btn-primary mt-2"
-                    onClick={submitCommentUpdate}
-                  >
-                    Update
-                  </button>
+              <div className="d-flex align-items-start">
+                <UserImage user={comment.author} width="30" />
+                <div className="ml-2">
+                  {editingComment && editingComment._id === comment._id ? (
+                    <div className="card-text">
+                      <textarea
+                        className="form-control"
+                        placeholder="Edit comment..."
+                        value={editingComment.content}
+                        onChange={handleCommentChange}
+                      />
+                      <button
+                        className="btn btn-primary mt-2"
+                        onClick={submitCommentUpdate}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="card-text" style={{padding: "4px 10px"}}>{comment.content}</p>
+                  )}
+                  <p className="card-subtitle text-muted">
+                    By:{" "}
+                    {comment.author ? comment.author.username : "DELETED USER"}{" "}
+                    on {formatDate(comment.createdAt)}
+                  </p>
                 </div>
-              ) : (
-                <p className="card-text">{comment.content}</p>
-              )}
-              <p className="card-subtitle text-muted">
-                By: {comment.author ? comment.author.username : "DELETED USER"} on {formatDate(comment.createdAt)}
-              </p>
+              </div>
             </div>
             {user._id === comment.author._id && (
               <div className="card-footer d-flex justify-content-end">
