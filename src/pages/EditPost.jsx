@@ -92,12 +92,12 @@ function EditPostPage() {
     setAllMedia(updatedMedia);
   };
 
-  const isAuthor = post.author._id === user._id;
+  const canEdit = (post.author && (post.author._id === user._id)) || user.isAdmin;
 
   return (
     <div>
       <h1>Edit Post</h1>
-      {isAuthor ? (
+      {canEdit ? (
         <>
           <CloudinaryUpload initialMedia={allMedia} onMediaUpdated={updateMediaList} allowMultiple={true} />
           <PostForm

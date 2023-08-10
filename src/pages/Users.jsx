@@ -4,6 +4,7 @@ import FollowButton from '../components/FollowButton'
 import { AuthContext } from '../context/Auth.context'
 import '../Users.css'
 import { apiBaseUrl } from '../config'
+import UserImage from '../components/UserImage'
 
 function UsersList() {
   const [users, setUsers] = useState([])
@@ -62,6 +63,7 @@ function UsersList() {
       <ul className='users-list'>
         {filteredUsers.map(user => (
           <li key={user._id} className='user-item'>
+            <UserImage user={user} width='30' />
             {user.username}
             <FollowButton
               userId={authContext.user._id}

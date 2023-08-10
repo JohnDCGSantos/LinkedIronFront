@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 import CloudinaryUpload from "../components/CloudinaryUpload";
-
+import '../App.css'
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -37,21 +37,63 @@ const Signup = () => {
       console.error(error);
     }
   };
+  const backgroundImageUrl = "url('../images/firstImageHome.png')";
 
+  
+  const titleStyle = {
+    position: "absolute",
+    fontSize: "60px",
+      fontWeight: "bold",
+      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+      textAlign: "center", // Center the title
+     
+      color: 'white',
+  }
+  const backgroundContainerStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundImage: backgroundImageUrl,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    overflow: 'hidden',
+  
+    /* opacity: 0.5, // You can adjust the opacity as needed
+    zIndex: -1, */ // Place the background behind other content
+  };
+  const formContainerStyle = {
+    
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  
+    /* opacity: 0.5, // You can adjust the opacity as needed
+    zIndex: -1, */ // Place the background behind other content
+  };
+  
   const formStyle = {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
     maxWidth: "400px",
-    margin: "0 auto",
     padding: "20px",
     border: "1px solid #ccc",
-    borderRadius: "5px",
+    borderRadius: "7px",
+    backgroundColor: 'white',
+    opacity: '0.95',
+marginTop: '100px',
+
   };
 
   const inputStyle = {
+    width: '300px',
     padding: "5px",
+    margin: '1px',
     borderRadius: "3px",
     border: "1px solid #ccc",
+    
   };
 
   const buttonStyle = {
@@ -61,15 +103,21 @@ const Signup = () => {
     color: "#fff",
     border: "none",
     cursor: "pointer",
+    width: '100px',
   };
+  
+
 
   const updatePhoto = (updatedMedia) => {
     setImage(updatedMedia[0]);
   };
 
   return (
-    <div>
-      <h1>Sign Up here!</h1>
+    <div >
+    
+      <div style={backgroundContainerStyle}></div>
+      <div style={formContainerStyle}>
+      <h1 style={titleStyle}>Sign Up here!</h1>
       <form onSubmit={handleSignup} style={formStyle}>
         <input
           style={inputStyle}
@@ -101,7 +149,6 @@ const Signup = () => {
           }}
           placeholder="Password"
         />
-        <CloudinaryUpload allowMultiple={false} initialMedia={[]} onMediaUpdated={updatePhoto} />
         <input
           style={inputStyle}
           type="text"
@@ -122,11 +169,15 @@ const Signup = () => {
           }}
           placeholder="Graduation Date"
         />
+        <CloudinaryUpload allowMultiple={false} initialMedia={[]} onMediaUpdated={updatePhoto} />
+
         <button style={buttonStyle} type="submit">
           Signup
         </button>
       </form>
+      </div>
     </div>
+    
   );
 };
 

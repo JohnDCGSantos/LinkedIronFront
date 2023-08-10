@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../context/Auth.context";
+import UserImage from "./UserImage";
 
 const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
   const { user } = useContext(AuthContext);
@@ -28,43 +29,30 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
     setEditingComment(null);
   };
 
+  const canEditOrAdmin = (comment) => canEdit(comment) || user.isAdmin;
+  const canEdit = (comment) =>
+    (comment.author && comment.author._id === user._id);
+
   return (
     <div>
       <h4 className="mb-3">Comments:</h4>
       {comments.map((comment) => (
         <div key={comment._id} className="mb-3">
           <div className="card">
-            <div className="card-body">
-              {editingComment && editingComment._id === comment._id ? (
-                <div className="card-text">
-                  <textarea
-                    className="form-control"
-                    placeholder="Edit comment..."
-                    value={editingComment.content}
-                    onChange={handleCommentChange}
-                  />
-                  <button
-                    className="btn btn-primary mt-2"
-                    onClick={submitCommentUpdate}
-                  >
-                    Update
-                  </button>
-                </div>
-              ) : (
-                <p className="card-text">{comment.content}</p>
-              )}
-              <p className="card-subtitle text-muted">
-                By: {comment.author ? comment.author.username : "DELETED USER"} on {formatDate(comment.createdAt)}
-              </p>
-            </div>
-            {user._id === comment.author._id && (
-              <div className="card-footer d-flex justify-content-end">
+            {canEditOrAdmin(comment) && (
+              <div className="d-flex ">
                 <div className="btn-group">
                   <button
                     type="button"
-                    className="btn btn-sm btn-secondary dropdown-toggle"
+                    className="btn btn-sm btn-secondary dropdown-toggle border-0"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
+                    style={{
+                      backgroundColor: "transparent",
+                      borderColor: "transparent",
+                      color: "grey",
+                      left: "150px",
+                    }}
                   >
                     <i className="bi bi-three-dots"></i>
                   </button>
@@ -77,18 +65,52 @@ const Comments = ({ comments, onDeleteComment, onUpdateComment }) => {
                         <i className="bi bi-trash"></i> Delete
                       </button>
                     </li>
-                    <li>
-                      <button
-                        className="dropdown-item"
-                        onClick={() => toggleEditingComment(comment)}
-                      >
-                        <i className="bi bi-pencil"></i> Edit
-                      </button>
-                    </li>
+                    {canEdit(comment) && (
+                      <li>
+                        <button
+                          className="dropdown-item"
+                          onClick={() => toggleEditingComment(comment)}
+                        >
+                          <i className="bi bi-pencil"></i> Edit
+                        </button>
+                      </li>
+                    )}
                   </ul>
                 </div>
               </div>
             )}
+            <div className="card-body">
+              <div className="d-flex align-items-start">
+                <UserImage user={comment.author} width="30" />
+                <div className="ml-2">
+                  {editingComment && editingComment._id === comment._id ? (
+                    <div className="card-text">
+                      <textarea
+                        className="form-control"
+                        placeholder="Edit comment..."
+                        value={editingComment.content}
+                        onChange={handleCommentChange}
+                      />
+                      <button
+                        className="btn btn-primary mt-2"
+                        onClick={submitCommentUpdate}
+                      >
+                        Update
+                      </button>
+                    </div>
+                  ) : (
+                    <p className="card-text" style={{ padding: "4px 10px" }}>
+                      {comment.content}
+                    </p>
+                  )}
+                  <p className="card-subtitle text-muted">
+                    By:{" "}
+                    {comment.author ? comment.author.username : "DELETED USER"}{" "}
+                    on {formatDate(comment.createdAt)}
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       ))}

@@ -71,6 +71,14 @@ function App() {
         />
 
         <Route
+          path='/Profile/:userId'
+          element={
+            <PrivateRoute>
+              <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
           path='/NewPost'
           element={
             <PrivateRoute>
