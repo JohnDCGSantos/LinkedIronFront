@@ -1,62 +1,21 @@
-import { useState, useEffect } from 'react'
-import axios from 'axios'
-import { apiBaseUrl } from "../config";
+import { useFollowToggle } from './UseFollowToogle'
 
-const FollowButton = ({ userId, followUserId, onFollow, onUnfollow }) => {
-  const [isFollowing, setIsFollowing] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+const FollowButton = ({ userId, followUserId, onUpdate }) => {
+  const { isFollowing, isLoading, toggleFollow } = useFollowToggle(userId, followUserId)
 
-  useEffect(() => {
-    const isUserFollowed = localStorage.getItem(`follow_${followUserId}`)
-    setIsFollowing(!!isUserFollowed)
-  }, [followUserId])
-
-  const handleFollow = async () => {
+  const handleToggle = async () => {
     try {
-      setIsLoading(true)
-      const token = localStorage.getItem('authToken')
-      await axios.post(
-        `${apiBaseUrl}/follow/users/${userId}/follow`,
-        { userId, followUserId },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      setIsFollowing(true)
-      //onFollow && onFollow()
-      localStorage.setItem(`follow_${followUserId}`, 'true')
-      onFollow && onFollow()
+      await toggleFollow()
+      if (onUpdate) {
+        onUpdate() // Call the onUpdate function provided by parent component
+      }
     } catch (error) {
-      console.error('Error following user:', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  const handleUnfollow = async () => {
-    try {
-      setIsLoading(true)
-      const token = localStorage.getItem('authToken')
-      await axios.delete(`${apiBaseUrl}/follow/users/${userId}/follow`, {
-        data: { userId, unfollowUserId: followUserId }, // Use followUserId directly
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      setIsFollowing(false)
-      localStorage.removeItem(`follow_${followUserId}`)
-      onUnfollow && onUnfollow()
-    } catch (error) {
-      console.error('Error unfollowing user:', error)
-    } finally {
-      setIsLoading(false)
+      console.error('Error toggling follow:', error)
     }
   }
 
   return (
-    <button onClick={isFollowing ? handleUnfollow : handleFollow} disabled={isLoading}>
+    <button onClick={handleToggle} disabled={isLoading}>
       {isLoading ? 'Loading...' : isFollowing ? 'Unfollow' : 'Follow'}
     </button>
   )

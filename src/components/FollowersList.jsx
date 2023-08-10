@@ -16,6 +16,7 @@ const FollowerList = () => {
             Authorization: `Bearer ${token}`,
           },
         })
+
         setFollowerUsers(response.data)
         setIsLoading(false)
       } catch (error) {
@@ -33,12 +34,9 @@ const FollowerList = () => {
 
   return (
     <div>
-      <h2>Follower List</h2>
-      <ul>
-        {followerUsers.map(user => (
-          <li key={user._id}>{user.username}</li>
-        ))}
-      </ul>
+      {followerUsers.map(user => (
+        <li key={user._id}>{user.username}</li>
+      ))}
     </div>
   )
 }

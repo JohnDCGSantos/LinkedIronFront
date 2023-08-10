@@ -13,9 +13,10 @@ import EditPostPage from './pages/EditPost'
 import Error from './pages/Error'
 import UsersList from './pages/Users'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 import FollowingPage from './pages/FollowingPage'
+import AllPostsByCategory from './components/AllPostsByCategory'
 
 function App() {
   return (
@@ -60,6 +61,15 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route
+          path='/posts/category/:category'
+          element={
+            <PrivateRoute>
+              <AllPostsByCategory />
+            </PrivateRoute>
+          }
+        />
+
         <Route
           path='/NewPost'
           element={

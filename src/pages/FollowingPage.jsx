@@ -1,12 +1,23 @@
 import FollowingList from '../components/FollowingList'
 import FollowerList from '../components/FollowersList'
+import '../FollowingPage.css' // Import the custom styles
+
 const FollowingPage = () => {
   return (
-    <div>
-      <h1>Following </h1>
-      <FollowingList />
-      <h1>Followers </h1>
-      <FollowerList />
+    <div className='containerF'>
+      <div className='containerFollowing'>
+        <h1 className='section-heading'>Following</h1>
+        <div>
+          <FollowingList />
+        </div>
+      </div>
+
+      <div className='containerFollowers'>
+        <h1 className='section-heading '>Followers</h1>
+        <div>
+          <FollowerList />
+        </div>
+      </div>
     </div>
   )
 }

@@ -1,0 +1,61 @@
+/* FollowingPage.css */
+
+.containerF {
+  
+  margin: 0 auto;
+  padding: 20px;
+  list-style: none;
+  display: flex;
+  
+  justify-content: space-around;
+
+}
+
+  
+  
+
+.containerFollowers  {
+  
+  margin: 0 auto;
+  padding: 20px;
+  list-style: none;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start
+}
+.containerFollowing  {
+  
+  margin: 0 auto;
+  padding: 20px;
+  list-style: none;
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start
+}
+
+
+
+.section-heading {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list-item {
+  background-color: #f5f5f5;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.list-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Add more styles as needed */
