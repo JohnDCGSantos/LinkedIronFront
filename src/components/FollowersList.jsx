@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { apiBaseUrl } from '../config'
+import UserImage from './UserImage'
 
 const FollowerList = () => {
   const [followerUsers, setFollowerUsers] = useState([])
@@ -35,7 +36,11 @@ const FollowerList = () => {
   return (
     <div>
       {followerUsers.map(user => (
-        <li key={user._id}>{user.username}</li>
+        <li key={user._id}>
+          <UserImage user={user} width='30' />
+
+          <div className='itemsName'>{user.username}</div>
+        </li>
       ))}
     </div>
   )
