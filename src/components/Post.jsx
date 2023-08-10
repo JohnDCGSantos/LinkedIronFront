@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 import axios from "axios";
@@ -6,13 +6,15 @@ import Comments from "./Comments";
 import Actions from "./Actions";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
 import { Carousel } from "react-bootstrap";
+import { AuthContext } from "../context/Auth.context";
 
-const Post = ({ post, isCompact, isEditable }) => {
+const Post = ({ post, isCompact }) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [comments, setComments] = useState(
     isCompact ? post.comments.slice(0, 3) : post.comments
   );
   const [likes, setLikes] = useState(post.likes ? post.likes.length : 0);
+  const { user } = useContext(AuthContext);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
@@ -74,6 +76,8 @@ const Post = ({ post, isCompact, isEditable }) => {
       console.error(error);
     }
   };
+
+  const isAuthor = post.author._id === user._id;
 
   return (
     <div className="card mb-3">
@@ -145,7 +149,7 @@ const Post = ({ post, isCompact, isEditable }) => {
             Read more
           </Link>
         )}
-        {isEditable && (
+        {isAuthor && (
           <Link to={`/posts/${post._id}/edit`} className="btn btn-secondary">
             Edit
           </Link>
