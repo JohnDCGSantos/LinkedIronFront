@@ -1,28 +1,33 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 import axios from "axios";
-import Likes from "./Likes";
 import Comments from "./Comments";
 import Actions from "./Actions";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
 import { Carousel } from "react-bootstrap";
+import { AuthContext } from "../context/Auth.context";
 
-const Post = ({ post, isCompact, isEditable }) => {
+const Post = ({ post, isCompact }) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+  const [comments, setComments] = useState(
+    isCompact ? post.comments.slice(0, 3) : post.comments
+  );
+  const [likes, setLikes] = useState(post.likes ? post.likes.length : 0);
+  const { user } = useContext(AuthContext);
 
   const formatDate = (timestamp) => {
     const date = new Date(timestamp);
     return date.toLocaleString();
   };
 
-  const [comments, setComments] = useState(
-    isCompact ? post.comments.slice(0, 3) : post.comments
-  );
-
   const handleNewComment = (comment) => {
     const newComments = [comment, ...comments];
     setComments(newComments);
+  };
+
+  const handleLikeToggle = (liked) => {
+    setLikes(liked ? likes + 1 : likes - 1);
   };
 
   const editComment = async (updatedComment) => {
@@ -72,6 +77,8 @@ const Post = ({ post, isCompact, isEditable }) => {
     }
   };
 
+  const isAuthor = post.author._id === user._id;
+
   return (
     <div className="card mb-3">
       {post.media.length > 0 && (
@@ -108,11 +115,27 @@ const Post = ({ post, isCompact, isEditable }) => {
           <small className="text-muted">Category: {post.category}</small>
         </p>
         <p className="card-text">
-          <small className="text-muted">By: {post.author ? post.author.username : "DELETED USER"} on {formatDate(post.createdAt)}</small>
+          <small className="text-muted">
+            By: {post.author ? post.author.username : "DELETED USER"} on{" "}
+            {formatDate(post.createdAt)}
+          </small>
         </p>
-        <Likes postId={post._id} />
+        <div className="d-flex align-items-center justify-content-between mt-2">
+          <div className="d-flex align-items-center">
+            <i className="bi bi-hand-thumbs-up text-primary me-1"></i>
+            <span className="text-muted">{likes}</span>
+          </div>
+          <div className="d-flex align-items-center">
+            <i className="bi bi-chat-dots text-primary me-1"></i>
+            <span className="text-muted">{comments.length}</span>
+          </div>
+        </div>
         <div className="card-footer">
-          <Actions postId={post._id} addComment={handleNewComment} />
+          <Actions
+            postId={post._id}
+            addComment={handleNewComment}
+            likeUpdated={handleLikeToggle}
+          />
         </div>
         {comments.length > 0 && (
           <Comments
@@ -126,7 +149,7 @@ const Post = ({ post, isCompact, isEditable }) => {
             Read more
           </Link>
         )}
-        {isEditable && (
+        {isAuthor && (
           <Link to={`/posts/${post._id}/edit`} className="btn btn-secondary">
             Edit
           </Link>

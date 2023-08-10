@@ -3,7 +3,7 @@ import axios from 'axios'
 import Post from '../components/Post'
 import { AuthContext } from '../context/Auth.context'
 import { apiBaseUrl } from '../config'
-
+import CategorySearch from '../components/CategorySearch.jsx'
 const Feed = () => {
   const [posts, setPosts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
@@ -37,15 +37,14 @@ const Feed = () => {
   return (
     <div>
       <h1>Feed</h1>
+      <CategorySearch />
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <div>
           {posts.map(post => {
-           
             const isAuthor = post.author === user._id
-            /* const postId = {post._id} */
-            return <Post key={post._id} post={post} isEditable={isAuthor} isCompact={true} />
+            return <Post key={post._id} post={post} isCompact={true} />
           
           })}
         </div>
