@@ -39,28 +39,52 @@ const Signup = () => {
   };
   const backgroundImageUrl = "url('../images/firstImageHome.png')";
 
-  const formContainerStyle = {
-    
-    alignItems: "center",
-    minHeight: "100vh",
-    minWidth: "100vw",
+  
+  const titleStyle = {
+    position: "absolute",
+    fontSize: "60px",
+      fontWeight: "bold",
+      textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+      textAlign: "center", // Center the title
+     
+      color: 'white',
+  }
+  const backgroundContainerStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
     backgroundImage: backgroundImageUrl,
     backgroundSize: "cover",
     backgroundPosition: "center",
-    backgroundRepeat: 'no-repeat',
     overflow: 'hidden',
+  
+    /* opacity: 0.5, // You can adjust the opacity as needed
+    zIndex: -1, */ // Place the background behind other content
   };
+  const formContainerStyle = {
+    
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  
+    /* opacity: 0.5, // You can adjust the opacity as needed
+    zIndex: -1, */ // Place the background behind other content
+  };
+  
   const formStyle = {
-    display: "flex",
-    flexDirection: "column",
+    display: 'flex',
+    flexDirection: 'column',
     alignItems: 'center',
     maxWidth: "400px",
-    margin: "0 auto",
     padding: "20px",
     border: "1px solid #ccc",
     borderRadius: "7px",
     backgroundColor: 'white',
     opacity: '0.95',
+marginTop: '100px',
+
   };
 
   const inputStyle = {
@@ -69,6 +93,7 @@ const Signup = () => {
     margin: '1px',
     borderRadius: "3px",
     border: "1px solid #ccc",
+    
   };
 
   const buttonStyle = {
@@ -81,22 +106,17 @@ const Signup = () => {
     width: '100px',
   };
   
-const titleStyle = {
-  fontSize: "60px",
-    fontWeight: "bold",
-    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
-    textAlign: "center", // Center the title
-    marginTop: '100px',
-    color: 'white',
-    padding: '30px',
-}
+
+
   const updatePhoto = (updatedMedia) => {
     setImage(updatedMedia[0]);
   };
 
   return (
-    <div>
-    <div style={formContainerStyle}>
+    <div >
+    
+      <div style={backgroundContainerStyle}></div>
+      <div style={formContainerStyle}>
       <h1 style={titleStyle}>Sign Up here!</h1>
       <form onSubmit={handleSignup} style={formStyle}>
         <input
@@ -155,8 +175,9 @@ const titleStyle = {
           Signup
         </button>
       </form>
+      </div>
     </div>
-    </div>
+    
   );
 };
 

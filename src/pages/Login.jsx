@@ -62,15 +62,20 @@ function Login() {
     color: 'white',
     padding: '30px',
   };
-  const formContainerStyle = {
-   
-    minHeight: "100vh",
-    minWidth: "100vw",
+  
+  const backgroundContainerStyle = {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
     backgroundImage: backgroundImageUrl,
     backgroundSize: "cover",
-    backgroundPosition: "fixed",
+    backgroundPosition: "center",
     overflow: 'hidden',
-    
+
+    /* opacity: 0.5, // You can adjust the opacity as needed
+    zIndex: -1, */ // Place the background behind other content
   };
   const formStyle = {
     display: "flex",
@@ -102,7 +107,9 @@ function Login() {
   }
 
   return (
-    <div style={formContainerStyle}>
+    <div>
+       <div style={backgroundContainerStyle}></div>
+       <div style={backgroundContainerStyle}>
       <h2 style={titleStyleLogin}>Login Page</h2>
       <form onSubmit={handleLogin} style={formStyle}>
         <label style={labelStyle}>
@@ -132,6 +139,7 @@ function Login() {
         <button style={buttonStyle} type='submit'>Login</button>
       </form>
       {errorMessage ? <p>{errorMessage}</p> : null}
+      </div>
     </div>
   )
 }
