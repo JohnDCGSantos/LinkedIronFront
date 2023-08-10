@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiBaseUrl } from "../config";
 import CloudinaryUpload from "../components/CloudinaryUpload";
-
+import '../App.css'
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -37,19 +37,36 @@ const Signup = () => {
       console.error(error);
     }
   };
+  const backgroundImageUrl = "url('../images/firstImageHome.png')";
 
+  const formContainerStyle = {
+    
+    alignItems: "center",
+    minHeight: "100vh",
+    minWidth: "100vw",
+    backgroundImage: backgroundImageUrl,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: 'no-repeat',
+    overflow: 'hidden',
+  };
   const formStyle = {
     display: "flex",
     flexDirection: "column",
+    alignItems: 'center',
     maxWidth: "400px",
     margin: "0 auto",
     padding: "20px",
     border: "1px solid #ccc",
-    borderRadius: "5px",
+    borderRadius: "7px",
+    backgroundColor: 'white',
+    opacity: '0.95',
   };
 
   const inputStyle = {
+    width: '300px',
     padding: "5px",
+    margin: '1px',
     borderRadius: "3px",
     border: "1px solid #ccc",
   };
@@ -61,15 +78,26 @@ const Signup = () => {
     color: "#fff",
     border: "none",
     cursor: "pointer",
+    width: '100px',
   };
-
+  
+const titleStyle = {
+  fontSize: "60px",
+    fontWeight: "bold",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+    textAlign: "center", // Center the title
+    marginTop: '100px',
+    color: 'white',
+    padding: '30px',
+}
   const updatePhoto = (updatedMedia) => {
     setImage(updatedMedia[0]);
   };
 
   return (
     <div>
-      <h1>Sign Up here!</h1>
+    <div style={formContainerStyle}>
+      <h1 style={titleStyle}>Sign Up here!</h1>
       <form onSubmit={handleSignup} style={formStyle}>
         <input
           style={inputStyle}
@@ -101,7 +129,6 @@ const Signup = () => {
           }}
           placeholder="Password"
         />
-        <CloudinaryUpload allowMultiple={false} initialMedia={[]} onMediaUpdated={updatePhoto} />
         <input
           style={inputStyle}
           type="text"
@@ -122,10 +149,13 @@ const Signup = () => {
           }}
           placeholder="Graduation Date"
         />
+        <CloudinaryUpload allowMultiple={false} initialMedia={[]} onMediaUpdated={updatePhoto} />
+
         <button style={buttonStyle} type="submit">
           Signup
         </button>
       </form>
+    </div>
     </div>
   );
 };

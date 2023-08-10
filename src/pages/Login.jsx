@@ -37,13 +37,78 @@ function Login() {
     return <h1>Loading...</h1>
   }
 
+
+
+  const buttonStyle = {
+    padding: "10px 20px",
+    borderRadius: "5px",
+    background: "#007bff",
+    color: "#fff",
+    border: "none",
+    cursor: "pointer",
+    width: '100px',
+    alignItems: 'center',
+    
+
+  };
+
+  const backgroundImageUrl = "url('../images/firstImageHome.png')";
+  const titleStyleLogin = {
+    fontSize: "60px",
+    fontWeight: "bold",
+    textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+    textAlign: "center", // Center the title
+    marginTop: '100px',
+    color: 'white',
+    padding: '30px',
+  };
+  const formContainerStyle = {
+   
+    minHeight: "100vh",
+    minWidth: "100vw",
+    backgroundImage: backgroundImageUrl,
+    backgroundSize: "cover",
+    backgroundPosition: "fixed",
+    overflow: 'hidden',
+    
+  };
+  const formStyle = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: 'center',
+    maxWidth: "500px",
+    margin: "0 auto",
+    padding: "20px",
+    border: "1px solid #ccc",
+    borderRadius: "7px",
+    backgroundColor: 'white',
+    opacity: '0.95',
+  };
+
+  const inputStyle = {
+    padding: "5px",
+    width: '250px',
+    borderRadius: "3px",
+    border: "1px solid #ccc",
+    margin: "5px 0", // Add margin to the input boxes
+    alignSelf: "stretch",
+  };
+
+  const labelStyle = {
+    display: 'flex',
+    flexDirection: 'column',
+   alignItems: 'center',
+   color: 'grey',
+  }
+
   return (
-    <div>
-      <h2>Login Page</h2>
-      <form onSubmit={handleLogin}>
-        <label>
+    <div style={formContainerStyle}>
+      <h2 style={titleStyleLogin}>Login Page</h2>
+      <form onSubmit={handleLogin} style={formStyle}>
+        <label style={labelStyle}>
           Email:
           <input
+          style={inputStyle}
             type='email'
             value={email}
             required
@@ -52,9 +117,10 @@ function Login() {
             }}
           />
         </label>
-        <label>
+        <label style={labelStyle} >
           Password:
           <input
+          style={inputStyle}
             type='password'
             value={password}
             required
@@ -63,7 +129,7 @@ function Login() {
             }}
           />
         </label>
-        <button type='submit'>Login</button>
+        <button style={buttonStyle} type='submit'>Login</button>
       </form>
       {errorMessage ? <p>{errorMessage}</p> : null}
     </div>
