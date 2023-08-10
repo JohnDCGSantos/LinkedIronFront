@@ -2,7 +2,6 @@
 .category-search-container {
   overflow-x: auto;
   white-space: nowrap;
-  margin-top: 60px; /* Add margin top to create space for testing */
 }
 .card-carousel {
   display: flex;
@@ -11,10 +10,8 @@
 }
 .carousel-control-prev-icon {
   background-color: blue
-  /* Other styles if needed */
 }
 
 .carousel-control-next-icon {
   background-color: blue
-  /* Other styles if needed */
 }
