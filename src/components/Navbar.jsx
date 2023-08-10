@@ -57,9 +57,7 @@ const Navbar = () => {
             </div>
             <span className="navbar-text">
               <div className="userStatus">
-                <Link className="nav-link" to={"/Profile"}>
                   <UserImage user={user} width="30" />
-                </Link>
                 <button onClick={logOutUser}>Logout</button>
               </div>
             </span>
