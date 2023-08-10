@@ -92,7 +92,7 @@ function EditPostPage() {
     setAllMedia(updatedMedia);
   };
 
-  const isAuthor = post.author === user._id;
+  const isAuthor = post.author._id === user._id;
 
   return (
     <div>
