@@ -14,8 +14,8 @@ const UserImage = ({ user, width = "150" }) => {
     <Link className="nav-link" to={`/Profile${("/"+(user && user._id))}`}>
       {hasCloudinaryImage ? (
         <div
-          className={`card-img-top  ${user.isAdmin ? "admin-border" : ""}`}
-          style={{ width: width + "px" }}
+          className={`user-profile-image  ${user.isAdmin ? "admin-border" : ""}`}
+          style={{ minWidth: width + "px" }}
         >
           <CloudinaryContext cloudName={cloudName}>
             {user.image.startsWith("image/") ? (
@@ -43,7 +43,7 @@ const UserImage = ({ user, width = "150" }) => {
       ) : (
         <img
           src={defaultImageUrl}
-          className="card-img-top"
+          className="user-profile-image"
           alt="User image"
           style={{ width: width + "px" }}
         />

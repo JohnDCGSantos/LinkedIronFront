@@ -5,7 +5,6 @@ import axios from "axios";
 import Comments from "./Comments";
 import Actions from "./Actions";
 import { CloudinaryContext, Image, Video } from "cloudinary-react";
-import { Carousel } from "react-bootstrap";
 import { AuthContext } from "../context/Auth.context";
 import UserImage from "./UserImage";
 
@@ -13,6 +12,10 @@ const Post = ({ post, isCompact }) => {
   const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
   const [comments, setComments] = useState(
     isCompact ? post.comments.slice(0, 3) : post.comments
+  );
+
+  const [mainMedia, setMainMedia] = useState(
+    post.media && post.media.length > 0 ? post.media[0] : null
   );
   const [likes, setLikes] = useState(post.likes ? post.likes.length : 0);
   const { user } = useContext(AuthContext);
@@ -81,87 +84,160 @@ const Post = ({ post, isCompact }) => {
   const canEdit = (post.author && post.author._id === user._id) || user.isAdmin;
 
   return (
-    <div className="card mb-3">
-      {post.media.length > 0 && (
-        <CloudinaryContext cloudName={cloudName}>
-          <Carousel data-bs-theme="dark">
-            {post.media.map((item) => {
-              const itemSplit = item.split("/");
-              const resourceType = itemSplit[0];
-              const publicId = itemSplit[1];
-              return (
-                <Carousel.Item key={publicId} interval={5000}>
-                  <div className="carousel-item-wrapper">
-                    {resourceType === "image" ? (
-                      <Image publicId={publicId} width="300" crop="scale" />
-                    ) : (
-                      <Video
-                        publicId={publicId}
-                        controls
-                        width="300"
-                        crop="scale"
-                      />
-                    )}
-                  </div>
-                </Carousel.Item>
-              );
-            })}
-          </Carousel>
-        </CloudinaryContext>
-      )}
-      <div className="card-body">
-        <h5 className="card-title">{post.title}</h5>
-        <p className="card-text">{post.content}</p>
-        <p className="card-text">
-          <small className="text-muted">Category: {post.category}</small>
-        </p>
-        <p className="card-text">
-          <div className="d-flex align-items-start">
-            <UserImage user={post.author} width="30" />
-            <div className="ml-2">
-              <small className="text-muted">
-                By: {post.author ? post.author.username : "DELETED USER"} on{" "}
-                {formatDate(post.createdAt)}
-              </small>
+    <section>
+      <div className="card" style={{ maxWidth: "42rem" }}>
+        {canEdit && (
+          <div className="position-absolute end-0">
+            <div className="btn-group">
+              <button
+                type="button"
+                className="btn btn-sm btn-secondary dropdown-toggle border-0"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+                style={{
+                  backgroundColor: "transparent",
+                  borderColor: "transparent",
+                  color: "grey",
+                  marginRight: "12px",
+                }}
+              >
+                <i className="bi bi-three-dots"></i>
+              </button>
+              <ul className="dropdown-menu dropdown-menu-end">
+                <li>
+                  <Link
+                    to={`/posts/${post._id}/edit`}
+                    className="dropdown-item"
+                  >
+                    <i className="bi bi-pencil"></i> Edit
+                  </Link>
+                </li>
+              </ul>
             </div>
           </div>
-        </p>
-        <div className="d-flex align-items-center justify-content-between mt-2">
-          <div className="d-flex align-items-center">
-            <i className="bi bi-hand-thumbs-up text-primary me-1"></i>
-            <span className="text-muted">{likes}</span>
+        )}
+        <Link to={`/posts/${post._id}`} className="link-unstyled" style={{width:"100%"}}>
+          <div className="card-body" style={{ width: "100%" }}>
+            <div
+              className="d-flex mb-3 align-items-center"
+              style={{ textAlign: "left" }}
+            >
+              <UserImage user={post.author} width="40" />
+              <div className="text-dark mb-0">
+                <strong style={{ paddingLeft: "5px" }}>
+                  {post.author ? post.author.username : "DELETED USER"}
+                </strong>
+                <small
+                  className="text-muted d-block"
+                  style={{ marginTop: "-6px" }}
+                >
+                  {formatDate(post.createdAt)}
+                </small>
+              </div>
+            </div>
+            <div>
+              <p>{post.content}</p>
+            </div>
           </div>
-          <div className="d-flex align-items-center">
-            <i className="bi bi-chat-dots text-primary me-1"></i>
-            <span className="text-muted">{comments.length}</span>
+        </Link>
+        {mainMedia && (
+          <CloudinaryContext cloudName={cloudName} style={{ width: "100%" }}>
+            <div
+              className="bg-image hover-overlay ripple rounded-0"
+              data-mdb-ripple-color="light"
+            >
+              {mainMedia.split("/")[0] === "image" ? (
+                <Image
+                  publicId={mainMedia.split("/")[1]}
+                  width="500"
+                  crop="scale"
+                  className="w-100"
+                  alt={`Image ${1}`}
+                />
+              ) : (
+                <Video
+                  publicId={mainMedia.split("/")[1]}
+                  controls
+                  width="500"
+                  crop="scale"
+                  className="w-100"
+                />
+              )}
+            </div>
+            {post.media.length > 1 && (
+              <div className="card-body">
+                <div className="row">
+                  {post.media.map((item, index) => {
+                    const itemSplit = item.split("/");
+                    const resourceType = itemSplit[0];
+                    const publicId = itemSplit[1];
+                    return (
+                      <div className="col-md-6" key={publicId}>
+                        <div
+                          className="bg-image hover-overlay ripple rounded-0"
+                          data-mdb-ripple-color="light"
+                          onClick={() => setMainMedia(item)}
+                        >
+                          {resourceType === "image" ? (
+                            <Image
+                              publicId={publicId}
+                              width="300"
+                              crop="scale"
+                              className="w-100"
+                              alt={`Image ${index + 1}`}
+                            />
+                          ) : (
+                            <Video
+                              publicId={publicId}
+                              controls
+                              width="300"
+                              crop="scale"
+                            />
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </CloudinaryContext>
+        )}
+        <div
+          className="card-body"
+          style={{ width: "100%", padding: "0rem 1rem" }}
+        >
+          <div className="d-flex justify-content-between">
+            <div className="d-flex align-items-center">
+              <i className="bi bi-hand-thumbs-up text-primary me-1"></i>
+              <span className="text-muted">{likes}</span>
+            </div>
+            <div className="d-flex align-items-center">
+              <i className="bi bi-chat-dots text-primary me-1"></i>
+              <span className="text-muted">{comments.length}</span>
+            </div>
           </div>
         </div>
-        <div className="card-footer">
+
+        <div
+          className="card-body "
+          style={{ width: "100%", padding: "0rem 1rem" }}
+        >
           <Actions
-            postId={post._id}
+            post={post}
             addComment={handleNewComment}
             likeUpdated={handleLikeToggle}
           />
+          {comments.length > 0 && (
+            <Comments
+              comments={comments}
+              onDeleteComment={deleteComment}
+              onUpdateComment={editComment}
+            />
+          )}
         </div>
-        {comments.length > 0 && (
-          <Comments
-            comments={comments}
-            onDeleteComment={deleteComment}
-            onUpdateComment={editComment}
-          />
-        )}
-        {isCompact && (
-          <Link to={`/posts/${post._id}`} className="btn btn-primary mr-2">
-            Read more
-          </Link>
-        )}
-        {canEdit && (
-          <Link to={`/posts/${post._id}/edit`} className="btn btn-secondary">
-            Edit
-          </Link>
-        )}
       </div>
-    </div>
+    </section>
   );
 };
 

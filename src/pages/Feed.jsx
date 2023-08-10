@@ -4,6 +4,7 @@ import Post from '../components/Post'
 //import { AuthContext } from '../context/Auth.context'
 import { apiBaseUrl } from '../config'
 import CategorySearch from '../components/CategorySearch.jsx'
+import UserCardFeed from '../components/UserCardFeed'
 
 const Feed = () => {
   const [posts, setPosts] = useState([])
@@ -33,26 +34,30 @@ const Feed = () => {
   }, [])
 
   return (
-    <>
-      <div>
-        <CategorySearch />
-      </div>
-      <div>
-        <h1>Feed</h1>
-
-        {isLoading ? (
-          <p>Loading...</p>
-        ) : (
-          <div>
-            {posts.map(post => {
-              //const isAuthor = post.author === user._id
-              return <Post key={post._id} post={post} isCompact={true} />
-            })}
-          </div>
-        )}
-      </div>
-    </>
-  )
+    <div className="feed-container">
+    <div className="left-sidebar">
+           <UserCardFeed user={user} isEditable={true} />
+    </div>
+    <div className="main-content">
+           <h1>Feed</h1>
+      <CategorySearch />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
+        <div className="post-list">
+          {posts.map(post => (
+            <Post key={post._id} post={post} isCompact={true} />
+          ))}
+        </div>
+      )}
+    </div>
+    <div className="right-sidebar">
+      
+    </div>
+  </div>
+  
+  );
+  
 }
 
 export default Feed

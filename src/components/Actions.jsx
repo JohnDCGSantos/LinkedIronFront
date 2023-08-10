@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import axios from "axios";
 import { apiBaseUrl } from "../config";
 import LikeButton from "./Likes";
+import UserImage from "./UserImage";
+import { AuthContext } from "../context/Auth.context";
 
-const Actions = ({ postId, addComment, likeUpdated }) => {
+const Actions = ({ post, addComment, likeUpdated }) => {
+  const { user } = useContext(AuthContext);
   const [isCommentVisible, setIsCommentVisible] = useState(false);
   const [comment, setComment] = useState("");
 
@@ -21,7 +24,7 @@ const Actions = ({ postId, addComment, likeUpdated }) => {
       const token = localStorage.getItem("authToken");
 
       const newComment = await axios.post(
-        `${apiBaseUrl}/posts/${postId}/comment`,
+        `${apiBaseUrl}/posts/${post._id}/comment`,
         {
           content: comment,
         },
@@ -41,7 +44,7 @@ const Actions = ({ postId, addComment, likeUpdated }) => {
   };
 
   const handleShare = () => {
-    const postLink = `${apiBaseUrl}/posts/${postId}`;
+    const postLink = `${apiBaseUrl}/posts/${post._id}`;
 
     const linkedinShareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
       postLink
@@ -51,9 +54,16 @@ const Actions = ({ postId, addComment, likeUpdated }) => {
   };
 
   return (
-    <div className="d-flex justify-content-between align-items-center flex-column">
+    <div
+      className="d-flex justify-content-between align-items-center flex-column"
+      style={{ padding: "10px" }}
+    >
       <div className="d-flex justify-content-between">
-        <LikeButton postId={postId} onLike={() => likeUpdated(true)} onUnlike={() =>likeUpdated(false)} />
+        <LikeButton
+          postId={post._id}
+          onLike={() => likeUpdated(true)}
+          onUnlike={() => likeUpdated(false)}
+        />
         <button
           className="btn btn-outline-secondary"
           onClick={toggleCommentSection}
@@ -65,19 +75,23 @@ const Actions = ({ postId, addComment, likeUpdated }) => {
         </button>
       </div>
       {isCommentVisible && (
-        <div className="mt-3">
-          <textarea
-            className="form-control"
-            placeholder="Add a comment..."
-            value={comment}
-            onChange={handleCommentChange}
-          />
-          <button
-            className="btn btn-primary mt-2"
-            onClick={handleSubmitComment}
-          >
-            Submit
-          </button>
+        <div className="d-flex mt-3" style={{ width: "100%" }}>
+          <UserImage user={user} width="40" />
+          <div className="form-outline w-100" style={{ marginLeft: "5px" }}>
+            <textarea
+              className="form-control"
+              rows="2"
+              value={comment}
+              onChange={handleCommentChange}
+            ></textarea>
+            <button
+              type="button"
+              className="btn btn-primary btn-sm float-end mt-2"
+              onClick={handleSubmitComment}
+            >
+              Post
+            </button>
+          </div>
         </div>
       )}
     </div>
