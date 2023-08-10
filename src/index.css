@@ -19,13 +19,14 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
 body {
   margin: 0;
-  
+
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -49,9 +50,11 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
@@ -62,9 +65,11 @@ button:focus-visible {
     color: #213547;
     background-color: #ffffff;
   }
+
   a:hover {
     color: #747bff;
   }
+
   button {
     background-color: #f9f9f9;
   }
@@ -73,12 +78,12 @@ button:focus-visible {
 .userStatus {
   display: flex;
   flex-direction: row;
-  align-items: center!important;
+  align-items: center !important;
   justify-content: space-evenly;
   align-items: baseline;
 }
 
-.userStatus button{
+.userStatus button {
   margin: 0 5px;
 }
 
@@ -89,23 +94,23 @@ button:focus-visible {
   text-align: center;
 }
 
-.card-img-top {
+.user-profile-image {
   align-self: center;
   border-radius: 50%;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   border: 2px solid #ffffff;
   transition: transform 0.2s ease-in-out;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
-.card-img-top:hover {
+.user-profile-image:hover {
   transform: scale(1.1);
 }
 
 .image-container,
 .video-container {
-  width: 100%; 
-  height: 100%; 
+  width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,4 +119,130 @@ button:focus-visible {
 .admin-border {
   border-color: rgb(112, 19, 19);
   box-shadow: 0px 0px 5px rgba(161, 0, 0, 0.3);
+}
+
+.feed-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.left-sidebar {
+  flex: 1;
+  padding-right: 20px;
+}
+
+.main-content {
+  flex: 2;
+  padding: 0 20px;
+}
+
+.right-sidebar {
+  flex: 1;
+  padding-left: 20px;
+}
+
+@media (max-width: 768px) {
+  .feed-container {
+    flex-direction: column;
+  }
+
+  .left-sidebar,
+  .main-content,
+  .right-sidebar {
+    flex: 1;
+  }
+}
+
+.user-card-feed {
+  align-items: center;
+  border: 1px solid #e1e1e1;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  background-image: url('/public/images/UsercardBack.png');
+  background-size: 100% 77.5%;
+  background-repeat: no-repeat;
+  background-position: top;
+  color: white;
+  text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5);
+}
+
+.user-card-content {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+
+.user-name {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px;
+
+}
+
+.user-bootcamp,
+.user-graduationDate {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+.card mb-3{
+  background-color: grey !important;
+}
+.card-header {
+  background-color: transparent;
+  border-bottom: none;
+  padding-top: 5%;
+  position: relative;
+  right: 40%;
+}
+
+.text-muted {
+  padding: 5px;
+  color: #1a1a1a;
+}
+.card-footer{
+  background-color: white;
+}
+.post-content {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.carousel-inner {
+  width: 400px!important; 
+}
+
+.carousel-item-wrapper {
+  width: 100%; 
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.carousel-item-wrapper img,
+.carousel-item-wrapper video {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.link-unstyled {
+  text-decoration: none; 
+  color: inherit; 
+  outline: none; 
+}
+
+.link-unstyled:hover {
+  color: inherit;
 }
