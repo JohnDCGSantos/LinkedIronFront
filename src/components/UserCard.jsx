@@ -6,7 +6,7 @@ import { apiBaseUrl } from "../config";
 import CloudinaryUpload from "./CloudinaryUpload";
 import UserImage from "./UserImage";
 
-const UserCard = ({ user }) => {
+const UserCard = ({ user, isEditable }) => {
   const { logOutUser, updateUser } = useContext(AuthContext);
 
   const [isEditing, setIsEditing] = useState(false);
@@ -83,6 +83,11 @@ const UserCard = ({ user }) => {
     }
   };
 
+  const formatDate = (timestamp) => {
+    const date = new Date(timestamp);
+    return date.toLocaleDateString();
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -91,7 +96,7 @@ const UserCard = ({ user }) => {
 
   return (
     <div className="card">
-       {isEditing ? (
+      {isEditing ? (
         <CloudinaryUpload
           allowMultiple={false}
           initialMedia={hasCloudinaryImage ? [user.image] : []}
@@ -102,7 +107,9 @@ const UserCard = ({ user }) => {
             }))
           }
         />
-      ) : <UserImage user={user} />} 
+      ) : (
+        <UserImage user={user} />
+      )}
       <div className="card-body">
         {isEditing ? (
           <>
@@ -136,7 +143,7 @@ const UserCard = ({ user }) => {
             <h3 className="user-name">{user.username}</h3>
             <p className="user-email">{user.email}</p>
             <p className="user-bootcamp">{user.bootcamp}</p>
-            <p className="user-graduationDate">{user.graduationDate}</p>
+            <p className="user-graduationDate">{formatDate(user.graduationDate)}</p>
           </>
         )}
         {isEditing ? (
@@ -144,14 +151,14 @@ const UserCard = ({ user }) => {
             <button onClick={handleSaveClick}>Save</button>
             <button onClick={handleCancelClick}>Cancel</button>
           </>
-        ) : (
-          <div>
+        ) : isEditable ? (
+          <>
             <button onClick={handleEditClick}>Edit</button>
             <br />
             <br />
             <button onClick={handleDelete}>Delete my account</button>
-          </div>
-        )}
+          </>
+        ) : null}
       </div>
     </div>
   );
