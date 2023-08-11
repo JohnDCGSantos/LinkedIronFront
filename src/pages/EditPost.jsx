@@ -95,11 +95,14 @@ function EditPostPage() {
   const canEdit = (post.author && (post.author._id === user._id)) || user.isAdmin;
 
   return (
-    <div>
+    <div className='post-container'>
       <h1>Edit Post</h1>
       {canEdit ? (
         <>
+        <div className='cloudinary-upload'>
           <CloudinaryUpload initialMedia={allMedia} onMediaUpdated={updateMediaList} allowMultiple={true} />
+        </div>
+        <div className='post-form'>
           <PostForm
             onSubmit={async (updatedPostData) => {
               console.log("Updated post data:", updatedPostData);
@@ -112,6 +115,7 @@ function EditPostPage() {
             }}
           />
           <button className="btn btn-danger" onClick={handleDelete}>Delete post</button>
+        </div>
         </>
       ) : (
         <p>You are not authorized to edit this post.</p>

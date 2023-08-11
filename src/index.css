@@ -246,3 +246,85 @@ button:focus-visible {
 .link-unstyled:hover {
   color: inherit;
 }
+
+
+.post-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  justify-content: center;
+  padding: 20px;
+}
+
+.post-container h1 {
+  font-size: 30px;
+   font-variant: small-caps;
+}
+
+.cloudinary-upload {
+  margin: 0 auto;
+  width:100%;
+  max-width: 400px;
+}
+.post-form {
+  width: 265%;
+  max-width: 400px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 10px;
+  
+}
+
+.btn-primary, .user-item button{
+  background-color: #343a40; 
+  border-color: #343a40; 
+  font-size: 13px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.user-item button:hover,
+.user-item button:hover {
+  background-color: #1d2124; 
+  border-color: #1d2124; 
+}
+
+.users-list-container{
+  border-radius: 10px;
+  width: 250px; 
+  height: 300px
+}
+
+.users-list-container h2{
+  font-size: 30px;
+  
+}
+
+.feed-container{
+  background-color:rgb(248, 248, 248);
+}
+
+.user-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.containerF{
+  background-color: #e1e1e1;
+  border-radius: 10px;
+}
+
+.section-heading{
+  font-size: 30px;
+}
+
+.itemsName {
+  font-size: 1.0rem;
+}
+
+.containerFollowing li {
+  font-size: 1.0rem;
+}

@@ -31,16 +31,21 @@ function CreatePostPage() {
   };
 
   return (
-    <div>
+    <div className='post-container'>
       <h1>Create your post here</h1>
-      <CloudinaryUpload initialMedia={[]} onMediaUpdated={updateMediaList} allowMultiple={true} />
+      <div className='cloudinary-upload'>
+        <CloudinaryUpload initialMedia={[]} onMediaUpdated={updateMediaList} allowMultiple={true} />
+      <div className='post-form'>
       <PostForm
+        
         onSubmit={async (postData) => {
           console.log("Creating post with data:", postData);
           await submitPost(postData);
         }}
         defaultValues={{}}
-      />
+        />
+        </div>
+        </div>
     </div>
   );
 }
