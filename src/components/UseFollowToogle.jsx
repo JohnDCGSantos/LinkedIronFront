@@ -42,7 +42,7 @@ export const useFollowToggle = (userId, followUserId) => {
         setIsFollowing(true)
         localStorage.setItem(`follow_${followUserId}`, 'true')
       }
-      //navigate('/users')
+      navigate('/users')
     } catch (error) {
       console.error('Error toggling follow:', error)
     } finally {
