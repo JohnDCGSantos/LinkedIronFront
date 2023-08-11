@@ -52,14 +52,16 @@ function UsersPage() {
   )
 
   return (
+    <div className='user-container'>
+
     <div className='users-list-container'>
-      <h2>Iron Users</h2>
+      <h2>LinkdIron Users</h2>
       <input
         type='text'
         placeholder='Search users by name'
         value={searchQuery}
         onChange={e => setSearchQuery(e.target.value)}
-      />
+        />
       <ul className='users-list'>
         {filteredUsers.map(user => (
           <li key={user._id} className='user-item'>
@@ -70,11 +72,12 @@ function UsersPage() {
               followUserId={user._id}
               onFollow={() => handleFollow(user._id)}
               onUnfollow={() => handleUnfollow(user._id)}
-            />
+              />
           </li>
         ))}
       </ul>
     </div>
+        </div>
   )
 }
 
