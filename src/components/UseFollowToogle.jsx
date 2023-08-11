@@ -3,7 +3,7 @@ import axios from 'axios'
 import { apiBaseUrl } from '../config'
 import { useNavigate } from 'react-router-dom' // Import useNavigate
 
-export const useFollowToggle = (userId, followUserId) => {
+export const useFollowToggle = (userId, followUserId, navigateAway = true) => {
   const [isFollowing, setIsFollowing] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate() // Get the navigate function
@@ -42,7 +42,9 @@ export const useFollowToggle = (userId, followUserId) => {
         setIsFollowing(true)
         localStorage.setItem(`follow_${followUserId}`, 'true')
       }
-      navigate('/users')
+      if (navigateAway){
+        navigate('/users')
+      }
     } catch (error) {
       console.error('Error toggling follow:', error)
     } finally {

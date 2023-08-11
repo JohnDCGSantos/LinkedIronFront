@@ -47,6 +47,7 @@ function UsersList({followingChanged}) {
               userId={userFromContext._id}
               followUserId={user._id}
               onUpdate={() => followingChanged && followingChanged()}
+              navigateAway={false}
             />
           </li>
         ))}

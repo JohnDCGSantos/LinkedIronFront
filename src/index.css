@@ -293,12 +293,10 @@ button:focus-visible {
 .users-list-container{
   border-radius: 10px;
   width: 250px; 
-  height: 300px
 }
 
 .users-list-container h2{
   font-size: 30px;
-  
 }
 
 .feed-container{

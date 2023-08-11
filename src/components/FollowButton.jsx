@@ -1,7 +1,7 @@
 import { useFollowToggle } from './UseFollowToogle'
 
-const FollowButton = ({ userId, followUserId, onUpdate }) => {
-  const { isFollowing, isLoading, toggleFollow } = useFollowToggle(userId, followUserId)
+const FollowButton = ({ userId, followUserId, onUpdate, navigateAway = true }) => {
+  const { isFollowing, isLoading, toggleFollow } = useFollowToggle(userId, followUserId, navigateAway)
 
   const handleToggle = async () => {
     try {
