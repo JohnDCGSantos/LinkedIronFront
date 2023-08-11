@@ -22,7 +22,11 @@ const Feed = () => {
         },
       });
       const allPosts = response.data;
-      setPosts(response.data);
+      
+      // Only update if different
+      if (!arraysAreEqual(allPosts, posts)){
+        setPosts(response.data);
+      }
       console.log(allPosts);
     } catch (error) {
       console.log("Error fetching all posts", error);
@@ -33,6 +37,20 @@ const Feed = () => {
   useEffect(() => {
     fetchAllPosts();
   }, []);
+
+  const arraysAreEqual = (array1, array2) => {
+    if (array1.length !== array2.length) {
+      return false;
+    }
+    
+    for (let i = 0; i < array1.length; i++) {
+      if (array1[i]._id !== array2[i]._id) {
+        return false;
+      }
+    }
+    
+    return true;
+  };
 
   return (
     <div className="feed-container">
