@@ -5,31 +5,32 @@ import { AuthContext } from "../context/Auth.context";
 import { apiBaseUrl } from "../config";
 import CategorySearch from "../components/CategorySearch.jsx";
 import UserCardFeed from "../components/UserCardFeed";
+import UsersList from "../components/UsersList";
 
 const Feed = () => {
   const [posts, setPosts] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { user } = useContext(AuthContext);
 
+  const fetchAllPosts = async () => {
+    const token = localStorage.getItem("authToken");
+
+    try {
+      const response = await axios.get(`${apiBaseUrl}/posts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const allPosts = response.data;
+      setPosts(response.data);
+      console.log(allPosts);
+    } catch (error) {
+      console.log("Error fetching all posts", error);
+    }
+    setIsLoading(false);
+  };
+
   useEffect(() => {
-    const fetchAllPosts = async () => {
-      const token = localStorage.getItem("authToken");
-
-      try {
-        const response = await axios.get(`${apiBaseUrl}/posts`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        const allPosts = response.data;
-        setPosts(response.data);
-        console.log(allPosts);
-      } catch (error) {
-        console.log("Error fetching all posts", error);
-      }
-      setIsLoading(false);
-    };
-
     fetchAllPosts();
   }, []);
 
@@ -50,7 +51,9 @@ const Feed = () => {
           </div>
         )}
       </div>
-      <div className="right-sidebar"></div>
+      <div className="right-sidebar">
+        <UsersList followingChanged={() => fetchAllPosts()} />
+      </div>
     </div>
   );
 };

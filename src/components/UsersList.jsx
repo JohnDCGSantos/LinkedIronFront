@@ -6,11 +6,10 @@ import '../Users.css'
 import { apiBaseUrl } from '../config'
 import UserImage from '../components/UserImage'
 
-function UsersPage() {
+function UsersList({followingChanged}) {
   const [users, setUsers] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [searchQuery, setSearchQuery] = useState('')
-  const authContext = useContext(AuthContext) // Use the AuthContext directly
+  const {user: userFromContext} = useContext(AuthContext)
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -21,7 +20,7 @@ function UsersPage() {
             Authorization: `Bearer ${token}`,
           },
         })
-        const usersData = response.data
+        const usersData = response.data.filter(user => !user.isAdmin && (user._id != userFromContext._id));
         setUsers(usersData)
         setIsLoading(false)
       } catch (error) {
@@ -33,43 +32,21 @@ function UsersPage() {
     fetchUsers()
   }, [])
 
-  const handleFollow = followUserId => {
-    // Logic to handle follow action
-    console.log(`Followed user ${followUserId}`)
-  }
-
-  const handleUnfollow = followUserId => {
-    // Logic to handle unfollow action
-    console.log(`Unfollowed user ${followUserId}`)
-  }
   if (isLoading) {
     return <div>Loading...</div>
   }
-  const filteredUsers = users.filter(
-    user =>
-      user._id !== authContext.user._id &&
-      user.username.toLowerCase().includes(searchQuery.toLowerCase()) // Filter users by search query
-  )
 
   return (
     <div className='users-list-container'>
-      <h2>Iron Users</h2>
-      <input
-        type='text'
-        placeholder='Search users by name'
-        value={searchQuery}
-        onChange={e => setSearchQuery(e.target.value)}
-      />
       <ul className='users-list'>
-        {filteredUsers.map(user => (
+        {users.map(user => (
           <li key={user._id} className='user-item'>
             <UserImage user={user} width='30' />
             {user.username}
             <FollowButton
-              userId={authContext.user._id}
+              userId={userFromContext._id}
               followUserId={user._id}
-              onFollow={() => handleFollow(user._id)}
-              onUnfollow={() => handleUnfollow(user._id)}
+              onUpdate={() => followingChanged && followingChanged()}
             />
           </li>
         ))}
@@ -78,4 +55,4 @@ function UsersPage() {
   )
 }
 
-export default UsersPage
+export default UsersList
