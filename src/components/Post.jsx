@@ -85,7 +85,7 @@ const Post = ({ post, isCompact }) => {
 
   return (
     <section>
-      <div className="card" style={{ maxWidth: "42rem" }}>
+      <div className="card mb-3" style={{ maxWidth: "42rem" }}>
         {canEdit && (
           <div className="position-absolute end-0">
             <div className="btn-group">
@@ -116,7 +116,6 @@ const Post = ({ post, isCompact }) => {
             </div>
           </div>
         )}
-        <Link to={`/posts/${post._id}`} className="link-unstyled" style={{width:"100%"}}>
           <div className="card-body" style={{ width: "100%" }}>
             <div
               className="d-flex mb-3 align-items-center"
@@ -135,11 +134,10 @@ const Post = ({ post, isCompact }) => {
                 </small>
               </div>
             </div>
-            <div>
+        <Link to={`/posts/${post._id}`} className="link-unstyled" style={{width:"100%"}}>
               <p>{post.content}</p>
-            </div>
-          </div>
         </Link>
+          </div>
         {mainMedia && (
           <CloudinaryContext cloudName={cloudName} style={{ width: "100%" }}>
             <div
@@ -159,7 +157,6 @@ const Post = ({ post, isCompact }) => {
                   publicId={mainMedia.split("/")[1]}
                   controls
                   width="500"
-                  crop="scale"
                   className="w-100"
                 />
               )}

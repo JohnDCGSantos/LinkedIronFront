@@ -1,5 +1,5 @@
 import React from "react";
-import { CloudinaryContext, Image, Video } from "cloudinary-react";
+import { CloudinaryContext, Image } from "cloudinary-react";
 import { Link } from "react-router-dom";
 
 const UserImage = ({ user, width = "150" }) => {
@@ -8,7 +8,7 @@ const UserImage = ({ user, width = "150" }) => {
     import.meta.env.BASE_URL
   }images/blank-profile-picture.png`;
 
-  const hasCloudinaryImage = user && user.image && user.image.split("/").length === 2;
+  const hasCloudinaryImage = user && user.image && user.image.startsWith("image/");
 
   return (
     <Link className="nav-link" to={`/Profile${("/"+(user && user._id))}`}>
@@ -18,7 +18,6 @@ const UserImage = ({ user, width = "150" }) => {
           style={{ minWidth: width + "px" }}
         >
           <CloudinaryContext cloudName={cloudName}>
-            {user.image.startsWith("image/") ? (
               <div className="image-container">
                 <Image
                   publicId={user.image.split("/")[1]}
@@ -27,17 +26,6 @@ const UserImage = ({ user, width = "150" }) => {
                   crop="thumb"
                 />
               </div>
-            ) : (
-              <div className="video-container">
-                <Video
-                  publicId={user.image.split("/")[1]}
-                  controls
-                  width={width}
-                  height={width}
-                  crop="thumb"
-                />
-              </div>
-            )}
           </CloudinaryContext>
         </div>
       ) : (

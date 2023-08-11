@@ -39,12 +39,9 @@ function PostPage() {
   }
 
   return (
-    <div>
-      <h1>Post details</h1>
-      <div>
+      <div className="d-flex justify-content-center">
         <Post key={post._id} post={post} />
       </div>
-    </div>
   );
 }
 export default PostPage;
